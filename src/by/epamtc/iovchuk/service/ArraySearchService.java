@@ -1,5 +1,6 @@
 package by.epamtc.iovchuk.service;
 
+import by.epamtc.iovchuk.exception.BlankArrayException;
 import by.epamtc.iovchuk.exception.NullException;
 import by.epamtc.iovchuk.util.ArrayCheckUtility;
 
@@ -16,12 +17,48 @@ public class ArraySearchService {
      * @return индекс искомого элемента массива
      * @throws NullException если ссылка на массив указывает на null
      */
-    public int indexOf(int[] array, int value) throws NullException {
-        ArrayCheckUtility.checkNull(array);
+    public int indexOf(int[] array, int value) throws NullException, BlankArrayException {
+        checkNullOrBlankArray(array);
         int leftIndex = 0;
         int rightIndex = array.length - 1;
         return binarySearch(array, value, leftIndex, rightIndex);
 
+    }
+
+    /**
+     * Находит индекса элемента с максимальным значением в массиве.
+     *
+     * @param array массив для поиска элемента
+     * @return индекса элемента с максимальным значением
+     * @throws NullException если ссылка на массив указывает на null
+     */
+    public int findMaxValue(int[] array) throws NullException, BlankArrayException {
+        checkNullOrBlankArray(array);
+        int maxValue = array[0];
+        for (int index = 1; index < array.length; index++) {
+            if (array[index] > maxValue) {
+                maxValue = array[index];
+            }
+        }
+        return maxValue;
+    }
+
+    /**
+     * Находит индекса элемента с минимальным значением в массиве.
+     *
+     * @param array массив для поиска элемента
+     * @return индекса элемента с минимальным значением
+     * @throws NullException если ссылка на массив указывает на null
+     */
+    public int findMinValue(int[] array) throws NullException, BlankArrayException {
+        checkNullOrBlankArray(array);
+        int minValue = array[0];
+        for (int index = 1; index < array.length; index++) {
+            if (array[index] < minValue) {
+                minValue = array[index];
+            }
+        }
+        return minValue;
     }
 
     /**
@@ -53,5 +90,10 @@ public class ArraySearchService {
         } else {
             return binarySearch(array, value, midIndex + 1, rightIndex);
         }
+    }
+
+    private void checkNullOrBlankArray(int[] array) throws NullException, BlankArrayException {
+        ArrayCheckUtility.checkNull(array);
+        ArrayCheckUtility.checkBlank(array);
     }
 }

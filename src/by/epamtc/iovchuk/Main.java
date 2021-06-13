@@ -1,5 +1,6 @@
 package by.epamtc.iovchuk;
 
+import by.epamtc.iovchuk.exception.BlankArrayException;
 import by.epamtc.iovchuk.exception.NullException;
 import by.epamtc.iovchuk.service.ArraySearchService;
 import by.epamtc.iovchuk.service.ArraySortService;
@@ -41,30 +42,24 @@ public class Main {
 
         ArraySearchService arraySearchService = new ArraySearchService();
         try {
-            int index = arraySearchService.indexOf(array, 4244);
-            System.out.println("FIND index = " + index);
-        } catch (NullException e) {
+            int foundValue =  arraySearchService.indexOf(array, 4);
+            int minValue = arraySearchService.findMinValue(array);
+            int maxValue = arraySearchService.findMaxValue(array);
+            System.out.println("minValue = " + minValue);
+            System.out.println("maxValue = " + maxValue);
+        } catch (NullException | BlankArrayException e) {
             e.printStackTrace();
         }
 
     }
 
     static private void testSort(int[] array) {
-
-        System.out.print("МАССИВ ИЗНАЧАЛЬНО - ");
-        for (int value : array) {
-            System.out.print(value + ", ");
-        }
-
-        System.out.println("\n");
-
         ArraySortService arraySortService = new ArraySortService();
 
         try {
             arraySortService.quickSort(array);
         } catch (NullException e) {
             e.printStackTrace();
-            return;
         }
     }
 }
