@@ -1,8 +1,10 @@
 package by.epamtc.iovchuk;
 
-import by.epamtc.iovchuk.exception.BlankArrayException;
 import by.epamtc.iovchuk.exception.NullException;
-import by.epamtc.iovchuk.service.ArraySearchService;
+import by.epamtc.iovchuk.filler.ArrayFiller;
+import by.epamtc.iovchuk.filler.ConsoleArrayFiller;
+import by.epamtc.iovchuk.filler.FileArrayFiller;
+import by.epamtc.iovchuk.filler.RandomArrayFiller;
 import by.epamtc.iovchuk.service.ArraySortService;
 
 /**
@@ -35,7 +37,7 @@ public class Main {
         }
         System.out.println("\n");
 
-        ArraySearchService arraySearchService = new ArraySearchService();
+      /*  ArraySearchService arraySearchService = new ArraySearchService();
         try {
             int foundValue =  arraySearchService.indexOf(array, 4);
             int minValue = arraySearchService.findMinValue(array);
@@ -54,9 +56,15 @@ public class Main {
             }
         } catch (NullException | BlankArrayException e) {
             e.printStackTrace();
+        }*/
+
+        int[] a = new int[5];
+        ArrayFiller consoleArrayFiller = new FileArrayFiller();
+        consoleArrayFiller.fillArray(a);
+
+        for (int value : a) {
+            System.out.print(value + ", ");
         }
-
-
     }
 
     static private void testSort(int[] array) {

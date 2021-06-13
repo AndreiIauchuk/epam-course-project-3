@@ -1,7 +1,7 @@
 package by.epamtc.iovchuk.service;
 
 import by.epamtc.iovchuk.exception.NullException;
-import by.epamtc.iovchuk.util.ArrayCheckUtility;
+import by.epamtc.iovchuk.util.ArrayCheckUtil;
 
 /**
  * Сервис для сортировки массива.
@@ -14,7 +14,7 @@ public class ArraySortService {
      * @param array массив для сортировки
      */
     public void selectionSort(int[] array) throws NullException {
-        ArrayCheckUtility.checkNull(array);
+        ArrayCheckUtil.checkNull(array);
         int arrayLength = array.length;
         if (checkSmallArrayLength(arrayLength)) {
             return;
@@ -44,7 +44,7 @@ public class ArraySortService {
      * @param array массив для сортировки
      */
     public void bubbleSort(int[] array) throws NullException {
-        ArrayCheckUtility.checkNull(array);
+        ArrayCheckUtil.checkNull(array);
         int arrayLength = array.length;
         if (checkSmallArrayLength(arrayLength)) {
             return;
@@ -87,7 +87,7 @@ public class ArraySortService {
      * @param array массив для сортировки
      */
     public void quickSort(int[] array) throws NullException {
-        ArrayCheckUtility.checkNull(array);
+        ArrayCheckUtil.checkNull(array);
         int arrayLength = array.length;
         if (checkSmallArrayLength(arrayLength)) {
             return;

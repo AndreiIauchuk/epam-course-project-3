@@ -2,7 +2,8 @@ package by.epamtc.iovchuk.service;
 
 import by.epamtc.iovchuk.exception.BlankArrayException;
 import by.epamtc.iovchuk.exception.NullException;
-import by.epamtc.iovchuk.util.ArrayCheckUtility;
+import by.epamtc.iovchuk.util.ArrayCheckUtil;
+import by.epamtc.iovchuk.util.ArrayUtil;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -117,7 +118,7 @@ public class ArraySearchService {
             }
         }
 
-        return listToArray(primeNumbersList);
+        return ArrayUtil.listToArray(primeNumbersList);
     }
 
     /**
@@ -162,7 +163,7 @@ public class ArraySearchService {
             }
         }
 
-        return listToArray(fibonacciNumbersList);
+        return ArrayUtil.listToArray(fibonacciNumbersList);
     }
 
     /**
@@ -213,7 +214,7 @@ public class ArraySearchService {
             }
         }
 
-        return listToArray(threeDigitNumbersList);
+        return ArrayUtil.listToArray(threeDigitNumbersList);
 
     }
 
@@ -264,19 +265,10 @@ public class ArraySearchService {
 
 
     private void checkNullOrBlankArray(int[] array) throws NullException, BlankArrayException {
-        ArrayCheckUtility.checkNull(array);
-        ArrayCheckUtility.checkBlank(array);
+        ArrayCheckUtil.checkNull(array);
+        ArrayCheckUtil.checkBlank(array);
+
     }
 
-    private int[] listToArray(List<Integer> list) {
-        int listSize = list.size();
 
-        int[] array = new int[listSize];
-
-        for (int index = 0; index < listSize; index++) {
-            array[index] = list.get(index);
-        }
-
-        return array;
-    }
 }

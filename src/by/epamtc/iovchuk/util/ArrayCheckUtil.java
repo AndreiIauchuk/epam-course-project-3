@@ -3,9 +3,9 @@ package by.epamtc.iovchuk.util;
 import by.epamtc.iovchuk.exception.BlankArrayException;
 import by.epamtc.iovchuk.exception.NullException;
 
-public class ArrayCheckUtility {
+public class ArrayCheckUtil {
 
-    private ArrayCheckUtility() {}
+    private ArrayCheckUtil() {}
 
     /**
      * Проверяет, указывает ли ссылочная переменная массива на null.
