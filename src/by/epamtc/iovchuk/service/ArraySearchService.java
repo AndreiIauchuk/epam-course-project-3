@@ -4,7 +4,6 @@ import by.epamtc.iovchuk.exception.BlankArrayException;
 import by.epamtc.iovchuk.exception.NullException;
 import by.epamtc.iovchuk.util.ArrayCheckUtility;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,6 +19,7 @@ public class ArraySearchService {
      * @param value искомое значение элемента массива
      * @return индекс искомого элемента массива
      * @throws NullException если ссылка на массив указывает на null
+     * @throws BlankArrayException если массив является пустым
      */
     public int indexOf(int[] array, int value) throws NullException, BlankArrayException {
         checkNullOrBlankArray(array);
@@ -67,6 +67,7 @@ public class ArraySearchService {
      * @param array массив для поиска элемента
      * @return индекса элемента с максимальным значением
      * @throws NullException если ссылка на массив указывает на null
+     * @throws BlankArrayException если массив является пустым
      */
     public int findMaxValue(int[] array) throws NullException, BlankArrayException {
         checkNullOrBlankArray(array);
@@ -85,6 +86,7 @@ public class ArraySearchService {
      * @param array массив для поиска элемента
      * @return индекса элемента с минимальным значением
      * @throws NullException если ссылка на массив указывает на null
+     * @throws BlankArrayException если массив является пустым
      */
     public int findMinValue(int[] array) throws NullException, BlankArrayException {
         checkNullOrBlankArray(array);
@@ -102,26 +104,20 @@ public class ArraySearchService {
      *
      * @param array массив для поиска простых чисел
      * @return массив простых чисел
+     * @throws NullException если ссылка на массив указывает на null
+     * @throws BlankArrayException если массив является пустым
      */
-    public int[] findPrimeNumbers(int[] array) {
+    public int[] findPrimeNumbers(int[] array) throws NullException, BlankArrayException {
+        checkNullOrBlankArray(array);
         List<Integer> primeNumbersList = new LinkedList<>();
-        for (int i : array) {
-            if (checkPrimeNumber(i)) {
-                primeNumbersList.add(i);
+
+        for (int value : array) {
+            if (checkPrimeNumber(value)) {
+                primeNumbersList.add(value);
             }
         }
 
-        int primeNumbersListSize = primeNumbersList.size();
-
-        System.out.println("primeNumbersListSize = " + primeNumbersListSize);
-
-        int[] primeNumbers = new int[primeNumbersListSize];
-
-        for (int index = 0; index < primeNumbersListSize; index++) {
-            primeNumbers[index] = primeNumbersList.get(index);
-        }
-
-        return primeNumbers;
+        return listToArray(primeNumbersList);
     }
 
     /**
@@ -148,8 +144,69 @@ public class ArraySearchService {
                 && value % 7 != 0;
     }
 
+    /**
+     * Возвращает массив всех чисел Фибоначчи в указанном массиве.
+     *
+     * @param array массив для поиска чисел Фибоначчи
+     * @return массив простых чисел
+     * @throws NullException если ссылка на массив указывает на null
+     * @throws BlankArrayException если массив является пустым
+     */
+    public int[] findFibonacciNumbers(int[] array) throws NullException, BlankArrayException {
+        checkNullOrBlankArray(array);
+        List<Integer> fibonacciNumbersList = new LinkedList<>();
+
+        for (int value : array) {
+            if (checkFibonacciNumber(value)) {
+                fibonacciNumbersList.add(value);
+            }
+        }
+
+        return listToArray(fibonacciNumbersList);
+
+    }
+
+    /**
+     * Проверяет, является ли число числом Фибоначчи.
+     *
+     * @param value число
+     * @return true, если число является числом Фибоначчи
+     */
+    private boolean checkFibonacciNumber(int value) {
+        if (value < 0) {
+            return false;
+        }
+
+        if (value == 0 || value == 1) {
+            return true;
+        }
+
+        int prev = 1;
+        int current = 2;
+
+        while (current < value) {
+            int temp = current;
+            current = current + prev;
+            prev = temp;
+        }
+
+        return current == value;
+    }
+
     private void checkNullOrBlankArray(int[] array) throws NullException, BlankArrayException {
         ArrayCheckUtility.checkNull(array);
         ArrayCheckUtility.checkBlank(array);
+    }
+
+    private int[] listToArray(List<Integer> list) {
+        int listSize = list.size();
+
+        int[] array = new int[listSize];
+
+        for (int index = 0; index < listSize; index++) {
+            array[index] = list.get(index);
+        }
+
+        return array;
     }
 }

@@ -28,7 +28,7 @@ public class Main {
 
     public static void main(String[] args) {
         //ТЕСТ
-        int[] array = new int[]{5, 3, 2, 1, 7, 4, 2, 5, -4, 2, -54, 424};
+        int[] array = new int[]{5, 3, 2, 1, 7, 4, 2, 5, -4, 2, 89, 6765, 6442, -54, 424};
         //int[] array = new int[]{2, 3, 4, 1};
         int[] singleValueArray = new int[]{1};
         int[] nullArray = null;
@@ -45,17 +45,21 @@ public class Main {
             int foundValue =  arraySearchService.indexOf(array, 4);
             int minValue = arraySearchService.findMinValue(array);
             int maxValue = arraySearchService.findMaxValue(array);
-            System.out.println("minValue = " + minValue);
-            System.out.println("maxValue = " + maxValue);
+            int[] primeNumbers = arraySearchService.findPrimeNumbers(array);
+            int[] fibonacciNumbers = arraySearchService.findFibonacciNumbers(array);
+
+            //System.out.println("minValue = " + minValue);
+            //System.out.println("maxValue = " + maxValue);
+
+            System.out.println("\n");
+
+            for (int fib : fibonacciNumbers) {
+                System.out.print(fib + ", ");
+            }
         } catch (NullException | BlankArrayException e) {
             e.printStackTrace();
         }
 
-        int[] primeNumbers = arraySearchService.findPrimeNumbers(array);
-
-        for (int primeNumber : primeNumbers) {
-            System.out.print(primeNumber + ", ");
-        }
 
     }
 
