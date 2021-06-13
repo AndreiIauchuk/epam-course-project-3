@@ -4,12 +4,6 @@ import by.epamtc.iovchuk.exception.BlankArrayException;
 import by.epamtc.iovchuk.exception.NullException;
 import by.epamtc.iovchuk.service.ArraySearchService;
 import by.epamtc.iovchuk.service.ArraySortService;
-import com.sun.beans.finder.ClassFinder;
-
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * Создание типа Array, который является классом оболочкой над массивом целого типа. В данном типе должны быть реализованы конструкторы (позволяющие несколькими способами создавать объекты типа), get-ы, set-ы и переопределенные методы класса Object (toString(), equals(), hasCode()).
@@ -28,7 +22,7 @@ public class Main {
 
     public static void main(String[] args) {
         //ТЕСТ
-        int[] array = new int[]{5, 3, 2, 1, 7, 4, 2, 5, -4, 2, 89, 6765, 6442, -54, 424};
+        int[] array = new int[]{5, 3, 2, 1, 7, 4, 2, 5, -4, 2, 89, 579, 200, 132, 6765, 6442, -54, 424};
         //int[] array = new int[]{2, 3, 4, 1};
         int[] singleValueArray = new int[]{1};
         int[] nullArray = null;
@@ -39,6 +33,7 @@ public class Main {
         for (int value : array) {
             System.out.print(value + ", ");
         }
+        System.out.println("\n");
 
         ArraySearchService arraySearchService = new ArraySearchService();
         try {
@@ -47,14 +42,15 @@ public class Main {
             int maxValue = arraySearchService.findMaxValue(array);
             int[] primeNumbers = arraySearchService.findPrimeNumbers(array);
             int[] fibonacciNumbers = arraySearchService.findFibonacciNumbers(array);
+            int[] uniqueThreeDigitNumbers = arraySearchService.findUniqueThreeDigitNumbers(array);
 
             //System.out.println("minValue = " + minValue);
             //System.out.println("maxValue = " + maxValue);
 
             System.out.println("\n");
 
-            for (int fib : fibonacciNumbers) {
-                System.out.print(fib + ", ");
+            for (int value : uniqueThreeDigitNumbers) {
+                System.out.print(value + ", ");
             }
         } catch (NullException | BlankArrayException e) {
             e.printStackTrace();

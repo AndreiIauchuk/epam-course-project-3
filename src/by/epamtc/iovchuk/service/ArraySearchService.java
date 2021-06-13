@@ -112,7 +112,7 @@ public class ArraySearchService {
         List<Integer> primeNumbersList = new LinkedList<>();
 
         for (int value : array) {
-            if (checkPrimeNumber(value)) {
+            if (isPrimeNumber(value)) {
                 primeNumbersList.add(value);
             }
         }
@@ -123,10 +123,10 @@ public class ArraySearchService {
     /**
      * Проверяет, является ли число простым.
      *
-     * @param value число
+     * @param value число для проверки
      * @return true, если число является простым
      */
-    private boolean checkPrimeNumber(int value) {
+    private boolean isPrimeNumber(int value) {
         if (value <= 1) {
             return false;
         }
@@ -157,22 +157,21 @@ public class ArraySearchService {
         List<Integer> fibonacciNumbersList = new LinkedList<>();
 
         for (int value : array) {
-            if (checkFibonacciNumber(value)) {
+            if (isFibonacciNumber(value)) {
                 fibonacciNumbersList.add(value);
             }
         }
 
         return listToArray(fibonacciNumbersList);
-
     }
 
     /**
      * Проверяет, является ли число числом Фибоначчи.
      *
-     * @param value число
+     * @param value число для проверки
      * @return true, если число является числом Фибоначчи
      */
-    private boolean checkFibonacciNumber(int value) {
+    private boolean isFibonacciNumber(int value) {
         if (value < 0) {
             return false;
         }
@@ -192,6 +191,77 @@ public class ArraySearchService {
 
         return current == value;
     }
+
+    /**
+     * Возвращает массив всех трехзначных чисел в указанном массиве,
+     * в десятичной записи которых нет одинаковых цифр.
+     *
+     * @param array массив для поиска чисел Фибоначчи
+     * @return массив простых чисел
+     * @throws NullException если ссылка на массив указывает на null
+     * @throws BlankArrayException если массив является пустым
+     */
+    public int[] findUniqueThreeDigitNumbers(int[] array)
+            throws NullException, BlankArrayException {
+
+        checkNullOrBlankArray(array);
+        List<Integer> threeDigitNumbersList = new LinkedList<>();
+
+        for (int value : array) {
+            if (isUniqueThreeDigitNumber(value)) {
+                threeDigitNumbersList.add(value);
+            }
+        }
+
+        return listToArray(threeDigitNumbersList);
+
+    }
+
+    /**
+     * Проверяет, является ли указанное число трехзначным числом,
+     * в десятичной записи которого нет одинаковых цифр.
+     * @param value число для проверки
+     * @return true, если число трехзначное
+     */
+    private boolean isUniqueThreeDigitNumber(int value) {
+       if(isThreeDigitNumber(value)) {
+           return checkDigitUniqueness(value);
+       }
+
+       return false;
+    }
+
+    /**
+     * Проверяет, является ли число трехзначным.
+     * @param value число для проверки
+     * @return true, если число трехзначное
+     */
+    private boolean isThreeDigitNumber(int value)
+    {
+        return (100 <= value) && (value <= 999);
+    }
+
+    /**
+     * Проверяет указанное число на уникальность цифр.
+     * @param value число для проверки
+     * @return true, если все цифры числа уникальны
+     */
+    private boolean checkDigitUniqueness(int value) {
+        System.out.println(value);
+
+        int firstDigit = value / 100;
+        int secondDigit = value / 10 % 10;
+        int thirdDigit = value % 10;
+
+        System.out.println("firstDigit = " + firstDigit);
+        System.out.println("secondDigit = " + secondDigit);
+        System.out.println("thirdDigit = " + thirdDigit);
+
+        return firstDigit != secondDigit
+                && firstDigit != thirdDigit
+                && secondDigit != thirdDigit;
+    }
+
 
     private void checkNullOrBlankArray(int[] array) throws NullException, BlankArrayException {
         ArrayCheckUtility.checkNull(array);
