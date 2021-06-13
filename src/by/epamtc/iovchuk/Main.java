@@ -1,7 +1,14 @@
 package by.epamtc.iovchuk;
 
 import by.epamtc.iovchuk.exception.NullException;
+import by.epamtc.iovchuk.service.ArraySearchService;
 import by.epamtc.iovchuk.service.ArraySortService;
+import com.sun.beans.finder.ClassFinder;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Создание типа Array, который является классом оболочкой над массивом целого типа. В данном типе должны быть реализованы конструкторы (позволяющие несколькими способами создавать объекты типа), get-ы, set-ы и переопределенные методы класса Object (toString(), equals(), hasCode()).
@@ -26,7 +33,19 @@ public class Main {
         int[] nullArray = null;
         int[] blankArray = new int[]{};
 
-        testSort(blankArray);
+        testSort(array);
+
+        for (int value : array) {
+            System.out.print(value + ", ");
+        }
+
+        ArraySearchService arraySearchService = new ArraySearchService();
+        try {
+            int index = arraySearchService.indexOf(array, 4244);
+            System.out.println("FIND index = " + index);
+        } catch (NullException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -46,10 +65,6 @@ public class Main {
         } catch (NullException e) {
             e.printStackTrace();
             return;
-        }
-
-        for (int value : array) {
-            System.out.print(value + ", ");
         }
     }
 }

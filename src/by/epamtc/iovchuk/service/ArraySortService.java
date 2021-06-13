@@ -1,6 +1,7 @@
 package by.epamtc.iovchuk.service;
 
 import by.epamtc.iovchuk.exception.NullException;
+import by.epamtc.iovchuk.util.ArrayCheckUtility;
 
 /**
  * Сервис для сортировки массива.
@@ -13,7 +14,7 @@ public class ArraySortService {
      * @param array массив для сортировки
      */
     public void selectionSort(int[] array) throws NullException {
-        checkNull(array);
+        ArrayCheckUtility.checkNull(array);
         int arrayLength = array.length;
         if (checkSmallArrayLength(arrayLength)) {
             return;
@@ -43,7 +44,7 @@ public class ArraySortService {
      * @param array массив для сортировки
      */
     public void bubbleSort(int[] array) throws NullException {
-        checkNull(array);
+        ArrayCheckUtility.checkNull(array);
         int arrayLength = array.length;
         if (checkSmallArrayLength(arrayLength)) {
             return;
@@ -86,7 +87,7 @@ public class ArraySortService {
      * @param array массив для сортировки
      */
     public void quickSort(int[] array) throws NullException {
-        checkNull(array);
+        ArrayCheckUtility.checkNull(array);
         int arrayLength = array.length;
         if (checkSmallArrayLength(arrayLength)) {
             return;
@@ -160,17 +161,6 @@ public class ArraySortService {
         quickSortIterate(array, firstElementIndex, lastElementIndex);
     }
 
-    /**
-     * Проверяет, указывает ли ссылолчная переменная массива на null.
-     * 
-     * @param array массив для проверки на null
-     * @throws NullException если ссылка указывает на null
-     */
-    private void checkNull(int[] array) throws NullException {
-        if (array == null) {
-            throw new NullException("Массив");
-        }
-    }
 
     /**
      * Проверяет, равна ли нулю или единице указанная длина массива.
