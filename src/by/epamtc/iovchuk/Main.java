@@ -51,6 +51,12 @@ public class Main {
             e.printStackTrace();
         }
 
+        int[] primeNumbers = arraySearchService.findPrimeNumbers(array);
+
+        for (int primeNumber : primeNumbers) {
+            System.out.print(primeNumber + ", ");
+        }
+
     }
 
     static private void testSort(int[] array) {
