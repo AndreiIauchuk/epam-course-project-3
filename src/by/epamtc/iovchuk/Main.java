@@ -1,12 +1,16 @@
 package by.epamtc.iovchuk;
 
+import by.epamtc.iovchuk.exception.BlankArrayException;
 import by.epamtc.iovchuk.exception.NullException;
-import by.epamtc.iovchuk.exception.OutBoundsException;
 import by.epamtc.iovchuk.filler.ArrayFiller;
 import by.epamtc.iovchuk.filler.ConsoleArrayFiller;
 import by.epamtc.iovchuk.filler.FileArrayFiller;
 import by.epamtc.iovchuk.filler.RandomArrayFiller;
-import by.epamtc.iovchuk.service.ArraySortService;
+import by.epamtc.iovchuk.service.ArraySearchService;
+import by.epamtc.iovchuk.util.ArrayUtil;
+import by.epamtc.iovchuk.wrapper.IntArrayWrapper;
+
+import java.io.FileNotFoundException;
 
 /**
  * Создание типа Array, который является классом оболочкой над массивом целого типа. В данном типе должны быть реализованы конструкторы (позволяющие несколькими способами создавать объекты типа), get-ы, set-ы и переопределенные методы класса Object (toString(), equals(), hasCode()).
@@ -24,87 +28,161 @@ import by.epamtc.iovchuk.service.ArraySortService;
 public class Main {
 
     public static void main(String[] args) {
-        //ТЕСТ
-        int[] array = new int[]{5, 3, 2, 1, 7, 4, 2, 5, -4, 2, 89, 579, 200, 132, 6765, 6442, -54, 424, 41, 14, 24, 13, 14};
-        //int[] array = new int[]{2, 3, 4, 1};
-        int[] singleValueArray = new int[]{1};
-        int[] nullArray = null;
-        int[] blankArray = new int[]{};
 
-        String str = "1, 5, 2, 5, -2, 6, 25, 25, 11, 525, 64, 13, 234, 1, 5, 25, 25, 1, 16, 12, 1, 4";
+        String arrayValuesStr = "5, 1, 0, -51, 107, 75, 4, -5, 443, -15, 95, 279, 6, 9";
+        IntArrayWrapper intArrayWrapper = new IntArrayWrapper(arrayValuesStr);
 
-        IntArrayWrapper intArrayWrapper = null;
+        printSortedArray(intArrayWrapper);
+        printElementIndex(intArrayWrapper, 75);
+        printMinValue(intArrayWrapper);
+        printMaxValue(intArrayWrapper);
+        printPrimeNumbers(intArrayWrapper);
+        printFibonacciNumbers(intArrayWrapper);
+        printUniqueThreeDigitNumbers(intArrayWrapper);
 
-        try {
-            intArrayWrapper = new IntArrayWrapper(str);
-        } catch (NullException e) {
-            e.printStackTrace();
-            return;
-        }
-
-        intArrayWrapper.add(-123456,3);
-
-        int elem = 0;
-
-        try {
-            intArrayWrapper.remove(5);
-            elem = intArrayWrapper.getElement(5);
-            intArrayWrapper.setElement(0, 10000);
-        } catch (OutBoundsException e) {
-            e.printStackTrace();
-            return;
-        }
-
-        System.out.println(intArrayWrapper);
-        System.out.println("\n " + elem);
-
-        System.out.println("intArrayWrapper.getLength() = " + intArrayWrapper.getLength());
-        System.out.println("intArrayWrapper.getCapacity() = " + intArrayWrapper.getCapacity());
-
-        /*testSort(array);
-
-        for (int value : array) {
-            System.out.print(value + ", ");
-        }
         System.out.println("\n");
 
-      *//*  ArraySearchService arraySearchService = new ArraySearchService();
-        try {
-            int foundValue =  arraySearchService.indexOf(array, 4);
-            int minValue = arraySearchService.findMinValue(array);
-            int maxValue = arraySearchService.findMaxValue(array);
-            int[] primeNumbers = arraySearchService.findPrimeNumbers(array);
-            int[] fibonacciNumbers = arraySearchService.findFibonacciNumbers(array);
-            int[] uniqueThreeDigitNumbers = arraySearchService.findUniqueThreeDigitNumbers(array);
-
-            //System.out.println("minValue = " + minValue);
-            //System.out.println("maxValue = " + maxValue);
-
-            System.out.println("\n");
-
-            for (int value : uniqueThreeDigitNumbers) {
-                System.out.print(value + ", ");
-            }
-        } catch (NullException | BlankArrayException e) {
-            e.printStackTrace();
-        }*//*
-
-        int[] a = new int[5];
-        ArrayFiller consoleArrayFiller = new FileArrayFiller();
-        consoleArrayFiller.fillArray(a);
-
-        for (int value : a) {
-            System.out.print(value + ", ");
-        }*/
+        printConsoleFilledArray();
+        printFileFilledArray();
+        printRandomFilledArray();
     }
 
-    static private void testSort(int[] array) {
-        ArraySortService arraySortService = new ArraySortService();
-
+    static private void printSortedArray(IntArrayWrapper intArrayWrapper) {
         try {
-            arraySortService.quickSort(array);
+            intArrayWrapper.sort();
         } catch (NullException e) {
             e.printStackTrace();
         }
+
+        System.out.println("Отсортированный массив : "
+                + ArrayUtil.arrayToString(intArrayWrapper.getArrayCopy()));
+    }
+
+    static private void printElementIndex(IntArrayWrapper intArrayWrapper, int value) {
+        int foundElement;
+        try {
+            foundElement = intArrayWrapper.indexOf(75);
+        } catch (BlankArrayException e) {
+            e.printStackTrace();
+            return;
+        } catch (NullException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        System.out.println("Индекс элемента с указанным значением : " + foundElement);
+    }
+
+    static private void printMinValue(IntArrayWrapper intArrayWrapper) {
+        ArraySearchService arraySearchService = new ArraySearchService();
+        int minValue;
+        try {
+            minValue = arraySearchService.findMinValue(intArrayWrapper.getArrayCopy());
+        } catch (NullException e) {
+            e.printStackTrace();
+            return;
+        } catch (BlankArrayException e) {
+            e.printStackTrace();
+            return;
+        }
+        System.out.println("Минимальное значение в массиве : " + minValue);
+    }
+
+    static private void printMaxValue(IntArrayWrapper intArrayWrapper) {
+        ArraySearchService arraySearchService = new ArraySearchService();
+        int maxValue;
+        try {
+            maxValue = arraySearchService.findMaxValue(intArrayWrapper.getArrayCopy());
+        } catch (NullException e) {
+            e.printStackTrace();
+            return;
+        } catch (BlankArrayException e) {
+            e.printStackTrace();
+            return;
+        }
+        System.out.println("Максимальное значение в массиве : " + maxValue);
+    }
+
+    static private void printPrimeNumbers(IntArrayWrapper intArrayWrapper) {
+        ArraySearchService arraySearchService = new ArraySearchService();
+        int[] primeNumbers;
+        try {
+            primeNumbers = arraySearchService
+                    .findPrimeNumbers(intArrayWrapper.getArrayCopy());
+        } catch (NullException e) {
+            e.printStackTrace();
+            return;
+        } catch (BlankArrayException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        System.out.println("Массив простых чисел : "
+                + ArrayUtil.arrayToString(primeNumbers));
+    }
+
+    static private void printFibonacciNumbers(IntArrayWrapper intArrayWrapper) {
+        ArraySearchService arraySearchService = new ArraySearchService();
+        int[] fibonacciNumbers;
+        try {
+            fibonacciNumbers = arraySearchService
+                    .findFibonacciNumbers(intArrayWrapper.getArrayCopy());
+        } catch (NullException e) {
+            e.printStackTrace();
+            return;
+        } catch (BlankArrayException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        System.out.println("Массив чисел Фибоначчи : "
+                + ArrayUtil.arrayToString(fibonacciNumbers));
+    }
+
+    static private void printUniqueThreeDigitNumbers(IntArrayWrapper intArrayWrapper) {
+        ArraySearchService arraySearchService = new ArraySearchService();
+        int[] uniqueThreeDigitNumbers;
+        try {
+            uniqueThreeDigitNumbers = arraySearchService
+                    .findUniqueThreeDigitNumbers(intArrayWrapper.getArrayCopy());
+        } catch (NullException e) {
+            e.printStackTrace();
+            return;
+        } catch (BlankArrayException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        System.out.println("Массив трехзначных числел, " +
+                "в десятичной записи которых нет одинаковых цифр : "
+                + ArrayUtil.arrayToString(uniqueThreeDigitNumbers));
+    }
+
+    static private void printConsoleFilledArray() {
+        ConsoleArrayFiller consoleArrayFiller = new ConsoleArrayFiller();
+        printFilledArray(consoleArrayFiller);
+    }
+
+    static private void printFileFilledArray() {
+        ArrayFiller fileArrayFiller = null;
+        try {
+            fileArrayFiller = new FileArrayFiller("D:\\ArrayValues.txt");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        printFilledArray(fileArrayFiller);
+    }
+
+    static private void printRandomFilledArray() {
+        ArrayFiller randomArrayFiller = new RandomArrayFiller();
+        printFilledArray(randomArrayFiller);
+    }
+
+    static private void printFilledArray(ArrayFiller arrayFiller) {
+        int[] a = new int[5];
+        arrayFiller.fillArray(a);
+        System.out.println(ArrayUtil.arrayToString(a));
     }
 }

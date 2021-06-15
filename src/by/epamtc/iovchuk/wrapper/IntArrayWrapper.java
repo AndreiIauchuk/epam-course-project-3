@@ -1,15 +1,17 @@
-package by.epamtc.iovchuk;
+package by.epamtc.iovchuk.wrapper;
 
+import by.epamtc.iovchuk.exception.BlankArrayException;
 import by.epamtc.iovchuk.exception.NullException;
 import by.epamtc.iovchuk.exception.OutBoundsException;
+import by.epamtc.iovchuk.service.ArraySearchService;
+import by.epamtc.iovchuk.service.ArraySortService;
+import by.epamtc.iovchuk.util.ArrayUtil;
 import by.epamtc.iovchuk.util.CheckUtil;
-import sun.invoke.util.Wrapper;
 
-import javax.swing.text.WrappedPlainView;
+import java.io.Serializable;
 import java.util.Arrays;
-import java.util.Objects;
 
-public class IntArrayWrapper {
+public class IntArrayWrapper implements Serializable {
 
     private static final int DEFAULT_CAPACITY = 10;
 
@@ -22,9 +24,7 @@ public class IntArrayWrapper {
         intArray = new int[capacity];
     }
 
-    public IntArrayWrapper(int[] intArray) throws NullException {
-        CheckUtil.checkNull(intArray, "Массив");
-
+    public IntArrayWrapper(int[] intArray) {
         int length = intArray.length;
         calculateCapacity(length);
 
@@ -36,9 +36,7 @@ public class IntArrayWrapper {
         }
     }
 
-    public IntArrayWrapper(Integer[] integers) throws NullException {
-        CheckUtil.checkNull(integers, "Массив");
-
+    public IntArrayWrapper(Integer[] integers) {
         int length = integers.length;
         calculateCapacity(length);
 
@@ -50,9 +48,7 @@ public class IntArrayWrapper {
         }
     }
 
-    public IntArrayWrapper(String values) throws NullException {
-        CheckUtil.checkNull(values, "Строка");
-
+    public IntArrayWrapper(String values) {
         String[] strArray = values.split(", ");
 
         int length = strArray.length;
@@ -140,7 +136,7 @@ public class IntArrayWrapper {
      * Возвращает значение элемента массива с указанным индексом.
      *
      * @param index индекс элемента
-     * @return  значение элемента массива
+     * @return значение элемента массива
      */
     public int getElement(int index) throws OutBoundsException {
         CheckUtil.checkOutOfBoundsArray(index, length);
@@ -157,6 +153,51 @@ public class IntArrayWrapper {
         CheckUtil.checkOutOfBoundsArray(index, length);
 
         intArray[index] = value;
+    }
+
+    /**
+     * "Переворачивает" массив.
+     */
+    public void invert() {
+        if (length == 0 || length == 1) {
+            return;
+        }
+
+        int temp;
+        for (int i = 0; i < length / 2; i++) {
+            temp = intArray[i];
+            intArray[i] = intArray[length - 1 - i];
+            intArray[length - 1 - i] = temp;
+        }
+    }
+
+    /**
+     * Сортирует массив по возрастанию.
+     */
+    public void sort() throws NullException {
+        int[] tempArray = getArrayCopy();
+        System.arraycopy(intArray, 0, tempArray, 0, length);
+        new ArraySortService().quickSort(tempArray);
+        System.arraycopy(tempArray, 0, intArray, 0, length);
+    }
+
+    /**
+     * Находит индекс элемента массива с указанным значением.
+     *
+     * @param value искомое значение элемента массива
+     * @return индекс искомого элемента массива
+     * @throws NullException       если ссылка на массив указывает на null
+     * @throws BlankArrayException если массив является пустым
+     */
+    public int indexOf(int value) throws BlankArrayException, NullException {
+        int[] tempArray = getArrayCopy();
+        return new ArraySearchService().indexOf(tempArray, value);
+    }
+
+    public int[] getArrayCopy() {
+        int[] tempArray = new int[length];
+        System.arraycopy(intArray, 0, tempArray, 0, length);
+        return tempArray;
     }
 
     public int getLength() {
@@ -187,27 +228,9 @@ public class IntArrayWrapper {
     @Override
     public String toString() {
         return getClass() + " {" +
-                "intArray=" + wrappedArrayToString() +
+                "intArray=" + ArrayUtil.arrayToString(getArrayCopy()) +
                 ", length=" + length +
                 ", capacity=" + capacity +
                 '}';
-    }
-
-    private String wrappedArrayToString() {
-        if (length == 0) {
-            return "[]";
-        }
-
-        StringBuilder stringBuilder = new StringBuilder();
-
-        stringBuilder.append("[");
-        for (int i = 0; i < length; i++) {
-            stringBuilder
-                    .append(intArray[i])
-                    .append(", ");
-        }
-        //Удаляет последнюю запятую
-        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
-        return stringBuilder.append("]").toString();
     }
 }

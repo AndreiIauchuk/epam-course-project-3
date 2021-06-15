@@ -12,11 +12,12 @@ public class ArraySortService {
      * Сортировка массива методом выбора.
      *
      * @param array массив для сортировки
+     * @throws NullException если ссылка на массив указывает на null
      */
     public void selectionSort(int[] array) throws NullException {
         CheckUtil.checkNull(array, "Массив");
         int arrayLength = array.length;
-        if (checkSmallArrayLength(arrayLength)) {
+        if (CheckUtil.checkSmallArrayLength(arrayLength)) {
             return;
         }
 
@@ -42,11 +43,12 @@ public class ArraySortService {
      * Сортировка массива методом пузырька.
      *
      * @param array массив для сортировки
+     * @throws NullException если ссылка на массив указывает на null
      */
     public void bubbleSort(int[] array) throws NullException {
         CheckUtil.checkNull(array, "Массив");
         int arrayLength = array.length;
-        if (checkSmallArrayLength(arrayLength)) {
+        if (CheckUtil.checkSmallArrayLength(arrayLength)) {
             return;
         }
 
@@ -73,8 +75,6 @@ public class ArraySortService {
                      int firstElementIndex,
                      int secondElementIndex) {
 
-        System.out.println("SWAPPED " + firstElementIndex + " WITH " + secondElementIndex);
-
         int temp = array[firstElementIndex];
         array[firstElementIndex] = array[secondElementIndex];
         array[secondElementIndex] = temp;
@@ -85,11 +85,12 @@ public class ArraySortService {
      * Сортировка массива методом быстрой сортировки.
      *
      * @param array массив для сортировки
+     * @throws NullException если ссылка на массив указывает на null
      */
     public void quickSort(int[] array) throws NullException {
         CheckUtil.checkNull(array, "Массив");
         int arrayLength = array.length;
-        if (checkSmallArrayLength(arrayLength)) {
+        if (CheckUtil.checkSmallArrayLength(arrayLength)) {
             return;
         }
 
@@ -162,14 +163,5 @@ public class ArraySortService {
     }
 
 
-    /**
-     * Проверяет, равна ли нулю или единице указанная длина массива.
-     * 
-     * @param arrayLength длина массива
-     * @return true, если длина массива равна нулю или единице
-     */
-    private boolean checkSmallArrayLength(int arrayLength) {
-        return arrayLength == 0 || arrayLength == 1;
-    }
 
 }

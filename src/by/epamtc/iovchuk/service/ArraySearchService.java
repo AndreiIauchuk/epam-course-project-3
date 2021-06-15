@@ -248,15 +248,9 @@ public class ArraySearchService {
      * @return true, если все цифры числа уникальны
      */
     private boolean checkDigitUniqueness(int value) {
-        System.out.println(value);
-
         int firstDigit = value / 100;
         int secondDigit = value / 10 % 10;
         int thirdDigit = value % 10;
-
-        System.out.println("firstDigit = " + firstDigit);
-        System.out.println("secondDigit = " + secondDigit);
-        System.out.println("thirdDigit = " + thirdDigit);
 
         return firstDigit != secondDigit
                 && firstDigit != thirdDigit

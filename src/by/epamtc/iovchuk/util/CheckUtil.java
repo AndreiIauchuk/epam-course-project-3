@@ -32,6 +32,17 @@ public class CheckUtil {
         }
     }
 
+
+    /**
+     * Проверяет, равна ли нулю или единице указанная длина массива.
+     *
+     * @param arrayLength длина массива
+     * @return true, если длина массива равна нулю или единице
+     */
+    static public boolean checkSmallArrayLength(int arrayLength) {
+        return arrayLength == 0 || arrayLength == 1;
+    }
+
     static public void checkOutOfBoundsArray( int index, int arrayLength)
             throws OutBoundsException {
 

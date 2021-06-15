@@ -14,6 +14,6 @@ public class RandomArrayFiller extends ArrayFiller {
     }
 
     private int randomizeValue() {
-        return (int) (Math.random() * Integer.MAX_VALUE) - Integer.MIN_VALUE / 2;
+        return (int) ((Math.random() * Integer.MAX_VALUE) + Integer.MIN_VALUE / 2);
     }
 }
