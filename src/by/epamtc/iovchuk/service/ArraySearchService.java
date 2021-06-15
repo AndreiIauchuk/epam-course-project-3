@@ -2,7 +2,7 @@ package by.epamtc.iovchuk.service;
 
 import by.epamtc.iovchuk.exception.BlankArrayException;
 import by.epamtc.iovchuk.exception.NullException;
-import by.epamtc.iovchuk.util.ArrayCheckUtil;
+import by.epamtc.iovchuk.util.CheckUtil;
 import by.epamtc.iovchuk.util.ArrayUtil;
 
 import java.util.LinkedList;
@@ -265,8 +265,8 @@ public class ArraySearchService {
 
 
     private void checkNullOrBlankArray(int[] array) throws NullException, BlankArrayException {
-        ArrayCheckUtil.checkNull(array);
-        ArrayCheckUtil.checkBlank(array);
+        CheckUtil.checkNull(array, "Массив");
+        CheckUtil.checkBlankArray(array);
 
     }
 

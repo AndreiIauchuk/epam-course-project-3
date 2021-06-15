@@ -1,5 +1,6 @@
 package by.epamtc.iovchuk.filler;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
