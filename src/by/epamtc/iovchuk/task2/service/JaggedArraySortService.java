@@ -46,31 +46,45 @@ public class JaggedArraySortService {
             return;
         }
 
-        for (int outIndex = jaggedArrayLength - 1; outIndex > 0; --outIndex) {
-            for (int inIndex = 0; inIndex < outIndex; ++inIndex) {
-                switch (sortBy) {
-                    case "rowValuesSum":
+        switch (sortBy) {
+            case "rowValuesSum":
+                for (int outIndex = jaggedArrayLength - 1; outIndex > 0; --outIndex) {
+                    for (int inIndex = 0; inIndex < outIndex; ++inIndex) {
+
                         if (calcRowValuesSum(jaggedArray[inIndex]) > calcRowValuesSum(jaggedArray[inIndex + 1])) {
                             swapRows(jaggedArray, inIndex, inIndex + 1);
                         }
-                        break;
-
-                    case "maxValue":
-                        if (defineRowMaxValue(jaggedArray[inIndex]) > defineRowMaxValue(jaggedArray[inIndex + 1])) {
-                            swapRows(jaggedArray, inIndex, inIndex + 1);
-                        }
-                        break;
-
-                    case "minValue":
-                        if (defineRowMinValue(jaggedArray[inIndex]) > defineRowMinValue(jaggedArray[inIndex + 1])) {
-                            swapRows(jaggedArray, inIndex, inIndex + 1);
-                        }
-                        break;
-
+                    }
                 }
 
-            }
+                break;
+
+            case "maxValue":
+                for (int outIndex = jaggedArrayLength - 1; outIndex > 0; --outIndex) {
+                    for (int inIndex = 0; inIndex < outIndex; ++inIndex) {
+
+                        if (calcRowValuesSum(jaggedArray[inIndex]) > calcRowValuesSum(jaggedArray[inIndex + 1])) {
+                            swapRows(jaggedArray, inIndex, inIndex + 1);
+                        }
+                    }
+                }
+
+                break;
+
+            case "minValue":
+                for (int outIndex = jaggedArrayLength - 1; outIndex > 0; --outIndex) {
+                    for (int inIndex = 0; inIndex < outIndex; ++inIndex) {
+
+                        if (calcRowValuesSum(jaggedArray[inIndex]) > calcRowValuesSum(jaggedArray[inIndex + 1])) {
+                            swapRows(jaggedArray, inIndex, inIndex + 1);
+                        }
+                    }
+                }
+
+                break;
+
         }
+
     }
 
     private void swapRows(int[][] jaggedArray,
