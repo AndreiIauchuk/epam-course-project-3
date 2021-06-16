@@ -11,7 +11,8 @@ public class CheckUtil {
     /**
      * Проверяет, указывает ли ссылочная переменная на null.
      *
-     * @param o ссылочная переменная для проверки на null
+     * @param obj ссылочная переменная для проверки на null
+     * @param name наименование сущности
      * @throws NullException если ссылка указывает на null
      */
     static public void checkNull(Object obj, String name) throws NullException {

@@ -63,7 +63,7 @@ public class JaggedArraySortService {
                 for (int outIndex = jaggedArrayLength - 1; outIndex > 0; --outIndex) {
                     for (int inIndex = 0; inIndex < outIndex; ++inIndex) {
 
-                        if (calcRowValuesSum(jaggedArray[inIndex]) > calcRowValuesSum(jaggedArray[inIndex + 1])) {
+                        if (defineRowMaxValue(jaggedArray[inIndex]) > defineRowMaxValue(jaggedArray[inIndex + 1])) {
                             swapRows(jaggedArray, inIndex, inIndex + 1);
                         }
                     }
@@ -75,7 +75,7 @@ public class JaggedArraySortService {
                 for (int outIndex = jaggedArrayLength - 1; outIndex > 0; --outIndex) {
                     for (int inIndex = 0; inIndex < outIndex; ++inIndex) {
 
-                        if (calcRowValuesSum(jaggedArray[inIndex]) > calcRowValuesSum(jaggedArray[inIndex + 1])) {
+                        if (defineRowMinValue(jaggedArray[inIndex]) > defineRowMinValue(jaggedArray[inIndex + 1])) {
                             swapRows(jaggedArray, inIndex, inIndex + 1);
                         }
                     }

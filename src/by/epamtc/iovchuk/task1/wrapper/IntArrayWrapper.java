@@ -33,9 +33,7 @@ public class IntArrayWrapper implements Serializable {
         this.length = length;
         this.intArray = new int[capacity];
 
-        for (int i = 0; i < length; i++) {
-            this.intArray[i] = intArray[i];
-        }
+        System.arraycopy(intArray, 0, this.intArray, 0, length);
     }
 
     public IntArrayWrapper(Integer[] integers) {
@@ -76,7 +74,7 @@ public class IntArrayWrapper implements Serializable {
         intArray = new int[capacity];
 
         for (int i = 0; i < strArray.length; i++) {
-            intArray[i] = Integer.valueOf(strArray[i]);
+            intArray[i] = Integer.parseInt(strArray[i]);
         }
 
     }
@@ -137,7 +135,7 @@ public class IntArrayWrapper implements Serializable {
     /**
      * Удаляет элемент с указанным индексом из массива.
      *
-     * @param value значение
+     * @param index индекс элемента
      * @return true, если элемент был удален
      */
     public boolean remove(int index) throws OutBoundsException {

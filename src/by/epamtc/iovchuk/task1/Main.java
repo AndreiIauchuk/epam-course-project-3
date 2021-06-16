@@ -78,11 +78,8 @@ public class Main {
     static private void printElementIndex(IntArrayWrapper intArrayWrapper, int value) {
         int foundElement;
         try {
-            foundElement = intArrayWrapper.indexOf(75);
-        } catch (BlankArrayException e) {
-            e.printStackTrace();
-            return;
-        } catch (NullException e) {
+            foundElement = intArrayWrapper.indexOf(value);
+        } catch (BlankArrayException | NullException e) {
             e.printStackTrace();
             return;
         }
@@ -94,10 +91,7 @@ public class Main {
         int minValue;
         try {
             minValue = arraySearchService.findMinValue(intArrayWrapper.getArrayCopy());
-        } catch (NullException e) {
-            e.printStackTrace();
-            return;
-        } catch (BlankArrayException e) {
+        } catch (NullException | BlankArrayException e) {
             e.printStackTrace();
             return;
         }
@@ -108,10 +102,7 @@ public class Main {
         int maxValue;
         try {
             maxValue = arraySearchService.findMaxValue(intArrayWrapper.getArrayCopy());
-        } catch (NullException e) {
-            e.printStackTrace();
-            return;
-        } catch (BlankArrayException e) {
+        } catch (NullException | BlankArrayException e) {
             e.printStackTrace();
             return;
         }
@@ -123,10 +114,7 @@ public class Main {
         try {
             primeNumbers = arraySearchService
                     .findPrimeNumbers(intArrayWrapper.getArrayCopy());
-        } catch (NullException e) {
-            e.printStackTrace();
-            return;
-        } catch (BlankArrayException e) {
+        } catch (NullException | BlankArrayException e) {
             e.printStackTrace();
             return;
         }
@@ -140,10 +128,7 @@ public class Main {
         try {
             fibonacciNumbers = arraySearchService
                     .findFibonacciNumbers(intArrayWrapper.getArrayCopy());
-        } catch (NullException e) {
-            e.printStackTrace();
-            return;
-        } catch (BlankArrayException e) {
+        } catch (NullException | BlankArrayException e) {
             e.printStackTrace();
             return;
         }
@@ -157,10 +142,7 @@ public class Main {
         try {
             uniqueThreeDigitNumbers = arraySearchService
                     .findUniqueThreeDigitNumbers(intArrayWrapper.getArrayCopy());
-        } catch (NullException e) {
-            e.printStackTrace();
-            return;
-        } catch (BlankArrayException e) {
+        } catch (NullException | BlankArrayException e) {
             e.printStackTrace();
             return;
         }
@@ -176,7 +158,7 @@ public class Main {
     }
 
     static private void printFileFilledArray() {
-        ArrayFiller fileArrayFiller = null;
+        ArrayFiller fileArrayFiller;
         try {
             fileArrayFiller = new FileArrayFiller("D:\\ArrayValues.txt");
         } catch (FileNotFoundException e) {
