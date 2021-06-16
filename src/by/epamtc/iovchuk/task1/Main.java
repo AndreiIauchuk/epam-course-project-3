@@ -1,35 +1,52 @@
-package by.epamtc.iovchuk;
+package by.epamtc.iovchuk.task1;
 
-import by.epamtc.iovchuk.exception.BlankArrayException;
-import by.epamtc.iovchuk.exception.NullException;
-import by.epamtc.iovchuk.filler.ArrayFiller;
-import by.epamtc.iovchuk.filler.ConsoleArrayFiller;
-import by.epamtc.iovchuk.filler.FileArrayFiller;
-import by.epamtc.iovchuk.filler.RandomArrayFiller;
-import by.epamtc.iovchuk.service.ArraySearchService;
-import by.epamtc.iovchuk.util.ArrayUtil;
-import by.epamtc.iovchuk.wrapper.IntArrayWrapper;
+import by.epamtc.iovchuk.task1.exception.BlankArrayException;
+import by.epamtc.iovchuk.task1.exception.NullException;
+import by.epamtc.iovchuk.task1.filler.ArrayFiller;
+import by.epamtc.iovchuk.task1.filler.ConsoleArrayFiller;
+import by.epamtc.iovchuk.task1.filler.FileArrayFiller;
+import by.epamtc.iovchuk.task1.filler.RandomArrayFiller;
+import by.epamtc.iovchuk.task1.service.ArraySearchService;
+import by.epamtc.iovchuk.task1.util.ArrayUtil;
+import by.epamtc.iovchuk.task1.wrapper.IntArrayWrapper;
 
 import java.io.FileNotFoundException;
 
 /**
  * Создание типа Array, который является классом оболочкой над массивом целого типа. В данном типе должны быть реализованы конструкторы (позволяющие несколькими способами создавать объекты типа), get-ы, set-ы и переопределенные методы класса Object (toString(), equals(), hasCode()).
  * Программа должна иметь следующие возможности:
+ * <p>
  * 1. Сортировать массив тремя способами.
+ * </p>
+ * <p>
  * 2. Осуществлять поиск элемента массива (использовать алгоритм бинарного поиска).
+ * </p>
+ * <p>
  * 3. Нахождение максимального и минимального элемента массива.
+ * </p>
+ * <p>
  * 4. Получить все простые числа находящиеся в массиве.
+ * </p>
+ * <p>
  * 5. Получить все числа Фибонначчи находящиеся в массиве.
+ * </p>
+ * <p>
  * 6. Получить все трехзначные числа, в десятичной записи которых нет одинаковых цифр.
+ * </p>
+ * <p>
  * 7. Заполнения элементов массива и с консоли, и с файла и с помощью генерации случайных чисел.
+ * </p>
  *
  * @author Иовчук Андрей
  */
 public class Main {
 
+    static private ArraySearchService arraySearchService = new ArraySearchService();
+
     public static void main(String[] args) {
 
         String arrayValuesStr = "5, 1, 0, -51, 107, 75, 4, -5, 443, -15, 95, 279, 6, 9";
+
         IntArrayWrapper intArrayWrapper = new IntArrayWrapper(arrayValuesStr);
 
         printSortedArray(intArrayWrapper);
@@ -74,7 +91,6 @@ public class Main {
     }
 
     static private void printMinValue(IntArrayWrapper intArrayWrapper) {
-        ArraySearchService arraySearchService = new ArraySearchService();
         int minValue;
         try {
             minValue = arraySearchService.findMinValue(intArrayWrapper.getArrayCopy());
@@ -89,7 +105,6 @@ public class Main {
     }
 
     static private void printMaxValue(IntArrayWrapper intArrayWrapper) {
-        ArraySearchService arraySearchService = new ArraySearchService();
         int maxValue;
         try {
             maxValue = arraySearchService.findMaxValue(intArrayWrapper.getArrayCopy());
@@ -104,7 +119,6 @@ public class Main {
     }
 
     static private void printPrimeNumbers(IntArrayWrapper intArrayWrapper) {
-        ArraySearchService arraySearchService = new ArraySearchService();
         int[] primeNumbers;
         try {
             primeNumbers = arraySearchService
@@ -122,7 +136,6 @@ public class Main {
     }
 
     static private void printFibonacciNumbers(IntArrayWrapper intArrayWrapper) {
-        ArraySearchService arraySearchService = new ArraySearchService();
         int[] fibonacciNumbers;
         try {
             fibonacciNumbers = arraySearchService
@@ -140,7 +153,6 @@ public class Main {
     }
 
     static private void printUniqueThreeDigitNumbers(IntArrayWrapper intArrayWrapper) {
-        ArraySearchService arraySearchService = new ArraySearchService();
         int[] uniqueThreeDigitNumbers;
         try {
             uniqueThreeDigitNumbers = arraySearchService

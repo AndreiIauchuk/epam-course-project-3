@@ -1,9 +1,9 @@
-package by.epamtc.iovchuk.service;
+package by.epamtc.iovchuk.task1.service;
 
-import by.epamtc.iovchuk.exception.BlankArrayException;
-import by.epamtc.iovchuk.exception.NullException;
-import by.epamtc.iovchuk.util.CheckUtil;
-import by.epamtc.iovchuk.util.ArrayUtil;
+import by.epamtc.iovchuk.task1.exception.BlankArrayException;
+import by.epamtc.iovchuk.task1.exception.NullException;
+import by.epamtc.iovchuk.task1.util.CheckUtil;
+import by.epamtc.iovchuk.task1.util.ArrayUtil;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class ArraySearchService {
      * -1, если массив не содержит искомого элемента
      */
     private int binarySearch(int[] array, int value, int leftIndex, int rightIndex) {
-        if (leftIndex == rightIndex) {
+        if (leftIndex >= rightIndex) {
             if (array[leftIndex] == value) {
                 return leftIndex;
             } else {

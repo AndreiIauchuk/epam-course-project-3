@@ -1,4 +1,4 @@
-package by.epamtc.iovchuk.util;
+package by.epamtc.iovchuk.task1.util;
 
 import java.util.List;
 

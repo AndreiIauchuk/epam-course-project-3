@@ -1,4 +1,4 @@
-package by.epamtc.iovchuk.exception;
+package by.epamtc.iovchuk.task1.exception;
 
 public class NullException extends Exception{
 

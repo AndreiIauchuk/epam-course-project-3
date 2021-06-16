@@ -1,15 +1,17 @@
-package by.epamtc.iovchuk.wrapper;
+package by.epamtc.iovchuk.task1.wrapper;
 
-import by.epamtc.iovchuk.exception.BlankArrayException;
-import by.epamtc.iovchuk.exception.NullException;
-import by.epamtc.iovchuk.exception.OutBoundsException;
-import by.epamtc.iovchuk.service.ArraySearchService;
-import by.epamtc.iovchuk.service.ArraySortService;
-import by.epamtc.iovchuk.util.ArrayUtil;
-import by.epamtc.iovchuk.util.CheckUtil;
+import by.epamtc.iovchuk.task1.exception.BlankArrayException;
+import by.epamtc.iovchuk.task1.exception.NullException;
+import by.epamtc.iovchuk.task1.exception.OutBoundsException;
+import by.epamtc.iovchuk.task1.service.ArraySearchService;
+import by.epamtc.iovchuk.task1.service.ArraySortService;
+import by.epamtc.iovchuk.task1.util.ArrayUtil;
+import by.epamtc.iovchuk.task1.util.CheckUtil;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
 
 public class IntArrayWrapper implements Serializable {
 
@@ -45,6 +47,22 @@ public class IntArrayWrapper implements Serializable {
 
         for (int i = 0; i < length; i++) {
             intArray[i] = integers[i];
+        }
+    }
+
+    public IntArrayWrapper(Collection<Integer> intCollection) {
+        int length = intCollection.size();
+        calculateCapacity(length);
+
+        this.length = length;
+        intArray = new int[capacity];
+
+        Iterator<Integer> iterator = intCollection.iterator();
+
+        int i = 0;
+        while (iterator.hasNext()) {
+            intArray[i] = iterator.next();
+            ++i;
         }
     }
 
@@ -159,7 +177,7 @@ public class IntArrayWrapper implements Serializable {
      * "Переворачивает" массив.
      */
     public void invert() {
-        if (length == 0 || length == 1) {
+        if (CheckUtil.checkSmallArrayLength(length)) {
             return;
         }
 

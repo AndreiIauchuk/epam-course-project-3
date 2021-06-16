@@ -1,8 +1,8 @@
-package by.epamtc.iovchuk.util;
+package by.epamtc.iovchuk.task1.util;
 
-import by.epamtc.iovchuk.exception.BlankArrayException;
-import by.epamtc.iovchuk.exception.NullException;
-import by.epamtc.iovchuk.exception.OutBoundsException;
+import by.epamtc.iovchuk.task1.exception.BlankArrayException;
+import by.epamtc.iovchuk.task1.exception.NullException;
+import by.epamtc.iovchuk.task1.exception.OutBoundsException;
 
 public class CheckUtil {
 

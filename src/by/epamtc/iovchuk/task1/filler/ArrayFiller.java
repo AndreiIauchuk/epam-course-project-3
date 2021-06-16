@@ -1,4 +1,4 @@
-package by.epamtc.iovchuk.filler;
+package by.epamtc.iovchuk.task1.filler;
 
 /**
  * Абстрактный класс для заполнения массива значениями.

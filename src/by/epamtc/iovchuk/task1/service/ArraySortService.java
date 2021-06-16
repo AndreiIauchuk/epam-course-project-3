@@ -1,7 +1,7 @@
-package by.epamtc.iovchuk.service;
+package by.epamtc.iovchuk.task1.service;
 
-import by.epamtc.iovchuk.exception.NullException;
-import by.epamtc.iovchuk.util.CheckUtil;
+import by.epamtc.iovchuk.task1.exception.NullException;
+import by.epamtc.iovchuk.task1.util.CheckUtil;
 
 /**
  * Сервис для сортировки массива.
@@ -49,10 +49,6 @@ public class ArraySortService {
         CheckUtil.checkNull(array, "Массив");
         int arrayLength = array.length;
         if (CheckUtil.checkSmallArrayLength(arrayLength)) {
-            return;
-        }
-
-        if (arrayLength == 0) {
             return;
         }
 

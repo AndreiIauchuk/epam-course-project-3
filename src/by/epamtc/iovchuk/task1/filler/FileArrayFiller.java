@@ -1,7 +1,6 @@
-package by.epamtc.iovchuk.filler;
+package by.epamtc.iovchuk.task1.filler;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
