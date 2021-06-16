@@ -17,7 +17,7 @@ public class IntArrayWrapper implements Serializable {
 
     private static final int DEFAULT_CAPACITY = 10;
 
-    private int[] intArray;
+    private final int[] intArray;
     private int length;
     private int capacity;
 

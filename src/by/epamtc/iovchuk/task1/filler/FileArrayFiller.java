@@ -1,5 +1,8 @@
 package by.epamtc.iovchuk.task1.filler;
 
+import by.epamtc.iovchuk.task1.exception.NullException;
+import by.epamtc.iovchuk.task1.util.CheckUtil;
+
 import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,8 +28,8 @@ public class FileArrayFiller extends ArrayFiller {
     }
 
     @Override
-    public void fillArray(int[] array) {
-
+    public void fillArray(int[] array) throws NullException {
+        CheckUtil.checkNull(array, "Массив");
         int arrayLength = array.length;
 
         List<Integer> fileArrayList = parseFile();

@@ -176,7 +176,12 @@ public class Main {
 
     static private void printFilledArray(ArrayFiller arrayFiller) {
         int[] a = new int[5];
-        arrayFiller.fillArray(a);
+        try {
+            arrayFiller.fillArray(a);
+        } catch (NullException e) {
+            e.printStackTrace();
+            return;
+        }
         System.out.println(ArrayUtil.arrayToString(a));
     }
 }
