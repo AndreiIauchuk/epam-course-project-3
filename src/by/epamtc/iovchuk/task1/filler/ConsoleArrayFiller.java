@@ -20,6 +20,7 @@ public class ConsoleArrayFiller extends ArrayFiller {
         for (int index = 0; index < arrayLength; index++) {
             array[index] = readIntValue();
         }
+        consoleScanner.close();
     }
 
     private int readIntValue() {

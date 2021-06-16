@@ -160,7 +160,7 @@ public class Main {
     static private void printFileFilledArray() {
         ArrayFiller fileArrayFiller;
         try {
-            fileArrayFiller = new FileArrayFiller("D:\\ArrayValues.txt");
+            fileArrayFiller = new FileArrayFiller("M:\\ArrayValues.txt");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             return;
