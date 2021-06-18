@@ -61,7 +61,7 @@ public class IntArrayWrapper implements Serializable {
         createWrappedArray(length);
 
         for (int i = 0; i < strArray.length; i++) {
-            intArray[i] = Integer.valueOf(strArray[i]);
+            intArray[i] = Integer.parseInt(strArray[i]);
         }
 
     }
@@ -134,7 +134,7 @@ public class IntArrayWrapper implements Serializable {
     /**
      * Удаляет элемент с указанным индексом из массива.
      *
-     * @param value значение
+     * @param index индекс удаляемого элемента
      * @return true, если элемент был удален
      * @throws OutBoundsException если индекс выходит за пределы с
      *                            допустимого диапазона массива

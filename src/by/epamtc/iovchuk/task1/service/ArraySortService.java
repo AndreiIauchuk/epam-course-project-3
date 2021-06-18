@@ -1,7 +1,6 @@
 package by.epamtc.iovchuk.task1.service;
 
 import by.epamtc.iovchuk.task1.exception.FirstOverLastIndexException;
-import by.epamtc.iovchuk.task1.exception.NullException;
 import by.epamtc.iovchuk.task1.exception.OutBoundsException;
 import by.epamtc.iovchuk.task1.validator.ArrayValidator;
 
@@ -49,7 +48,7 @@ public class ArraySortService {
      *
      * @param array массив для сортировки
      */
-    public void bubbleSort(int[] array) throws NullException {
+    public void bubbleSort(int[] array) {
         if (arrayValidator.checkNull(array)
                 || arrayValidator.checkBlank(array)
                 || arrayValidator.checkSingleElement(array)) {
@@ -95,15 +94,12 @@ public class ArraySortService {
             return;
         }
 
-        int arrayLength = array.length;
-
         int firstElementIndex = 0;
         int lastElementIndex = array.length - 1;
 
         try {
             quickSortIterate(array, firstElementIndex, lastElementIndex);
-        } catch (FirstOverLastIndexException ignored) {
-        } catch (OutBoundsException ignored) {
+        } catch (FirstOverLastIndexException | OutBoundsException ignored) {
         }
 
     }

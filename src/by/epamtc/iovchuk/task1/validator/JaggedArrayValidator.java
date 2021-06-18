@@ -5,8 +5,8 @@ public class JaggedArrayValidator {
     /**
      * Проверяет, указывает ли ссылка на null.
      *
-     * @param array ссылка на непрямоугольный массив для проверки
-     * @return, true если ссылка указывает на null
+     * @param jaggedArray ссылка на непрямоугольный массив для проверки
+     * @return true, если ссылка указывает на null
      */
     public boolean checkNull(int[][] jaggedArray) {
         return (jaggedArray == null);
@@ -15,7 +15,7 @@ public class JaggedArrayValidator {
     /**
      * Проверяет, является ли указанный непрямоугольный массив пустым.
      *
-     * @param array ссылка на непрямоугольный массив для проверки
+     * @param jaggedArray ссылка на непрямоугольный массив для проверки
      * @return true, если указанный массив пустой
      */
     public boolean checkBlank(int[][] jaggedArray) {
@@ -26,7 +26,7 @@ public class JaggedArrayValidator {
      * Проверяет, содержит ли указанный непрямоугольный массив
      * только одну строку.
      *
-     * @param array ссылка на непрямоугольный массив для проверки
+     * @param jaggedArray ссылка на непрямоугольный массив для проверки
      * @return true, если указанный массив содержит только один элемент
      */
     public boolean checkSingleRow(int[][] jaggedArray) {

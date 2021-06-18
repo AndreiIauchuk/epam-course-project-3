@@ -1,6 +1,5 @@
 package by.epamtc.iovchuk.task2;
 
-import by.epamtc.iovchuk.task1.exception.NullException;
 import by.epamtc.iovchuk.task2.service.JaggedArraySortService;
 
 /**

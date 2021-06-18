@@ -6,7 +6,7 @@ public class ArrayValidator {
      * Проверяет, указывает ли ссылка на null.
      *
      * @param array ссылка на массив для проверки
-     * @return, true если ссылка указывает на null
+     * @return true если ссылка указывает на null
      */
     public boolean checkNull(int[] array) {
         return (array == null);

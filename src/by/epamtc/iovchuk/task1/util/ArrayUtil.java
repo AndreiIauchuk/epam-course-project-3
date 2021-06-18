@@ -13,9 +13,9 @@ public class ArrayUtil {
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append("[");
-        for (int i = 0; i < length; i++) {
+        for (int value : array) {
             stringBuilder
-                    .append(array[i])
+                    .append(value)
                     .append(", ");
         }
         //Удаляет последнюю запятую

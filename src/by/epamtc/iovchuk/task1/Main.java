@@ -125,7 +125,7 @@ public class Main {
     }
 
     static private void printFileFilledArray() {
-        ArrayFiller fileArrayFiller = null;
+        ArrayFiller fileArrayFiller;
         try {
             fileArrayFiller = new FileArrayFiller("D:\\ArrayValues.txt");
         } catch (FileNotFoundException e) {

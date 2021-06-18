@@ -5,7 +5,6 @@ import by.epamtc.iovchuk.task2.comparator.ArrayByMaxValueComparator;
 import by.epamtc.iovchuk.task2.comparator.ArrayByMinValueComparator;
 import by.epamtc.iovchuk.task2.comparator.ArrayByValuesSumComparator;
 
-import java.util.Arrays;
 import java.util.Comparator;
 
 public class JaggedArraySortService {
