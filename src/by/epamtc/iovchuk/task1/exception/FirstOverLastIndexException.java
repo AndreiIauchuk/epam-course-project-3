@@ -3,7 +3,7 @@ package by.epamtc.iovchuk.task1.exception;
 public class FirstOverLastIndexException extends Exception {
 
     public FirstOverLastIndexException() {
-        super("Минимальный индекс диапазона больше максимального!");
+        super("Минимальный индекс диапазона не может быть больше максимального!");
     }
 
     public FirstOverLastIndexException(String message) {
