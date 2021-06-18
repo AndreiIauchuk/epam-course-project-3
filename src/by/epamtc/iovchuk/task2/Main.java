@@ -67,10 +67,11 @@ public class Main {
 
     static private void printJaggedArray(int[][] jaggedArray) {
         for (int i = 0; i < jaggedArray.length; i++) {
+            System.out.print("[");
             for (int j = 0; j < jaggedArray[i].length; j++) {
                 System.out.print(" " + jaggedArray[i][j] + " ");
             }
-            System.out.println();
+            System.out.println("]");
         }
         System.out.println();
     }
