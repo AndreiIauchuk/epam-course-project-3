@@ -1,6 +1,5 @@
 package by.epamtc.iovchuk.task1;
 
-import by.epamtc.iovchuk.task1.exception.BlankArrayException;
 import by.epamtc.iovchuk.task1.exception.NullException;
 import by.epamtc.iovchuk.task1.filler.ArrayFiller;
 import by.epamtc.iovchuk.task1.filler.ConsoleArrayFiller;
@@ -50,7 +49,7 @@ public class Main {
         IntArrayWrapper intArrayWrapper = new IntArrayWrapper(arrayValuesStr);
 
         printSortedArray(intArrayWrapper);
-        printElementIndex(intArrayWrapper, 75);
+        printElementIndex(intArrayWrapper, 107);
         printMinValue(intArrayWrapper);
         printMaxValue(intArrayWrapper);
         printPrimeNumbers(intArrayWrapper);
@@ -65,71 +64,37 @@ public class Main {
     }
 
     static private void printSortedArray(IntArrayWrapper intArrayWrapper) {
-        try {
-            intArrayWrapper.sort();
-        } catch (NullException e) {
-            e.printStackTrace();
-        }
+        intArrayWrapper.sort();
 
         System.out.println("Отсортированный массив : "
-                + ArrayUtil.arrayToString(intArrayWrapper.getArrayCopy()));
+                + ArrayUtil.arrayToString(intArrayWrapper.getIntArray()));
     }
 
     static private void printElementIndex(IntArrayWrapper intArrayWrapper, int value) {
         int foundElement;
-        try {
-            foundElement = intArrayWrapper.indexOf(75);
-        } catch (BlankArrayException e) {
-            e.printStackTrace();
-            return;
-        } catch (NullException e) {
-            e.printStackTrace();
-            return;
-        }
+        foundElement = intArrayWrapper.indexOf(value);
 
         System.out.println("Индекс элемента с указанным значением : " + foundElement);
     }
 
     static private void printMinValue(IntArrayWrapper intArrayWrapper) {
         int minValue;
-        try {
-            minValue = arraySearchService.findMinValue(intArrayWrapper.getArrayCopy());
-        } catch (NullException e) {
-            e.printStackTrace();
-            return;
-        } catch (BlankArrayException e) {
-            e.printStackTrace();
-            return;
-        }
+        minValue = arraySearchService.findMinValue(intArrayWrapper.getIntArray());
+
         System.out.println("Минимальное значение в массиве : " + minValue);
     }
 
     static private void printMaxValue(IntArrayWrapper intArrayWrapper) {
         int maxValue;
-        try {
-            maxValue = arraySearchService.findMaxValue(intArrayWrapper.getArrayCopy());
-        } catch (NullException e) {
-            e.printStackTrace();
-            return;
-        } catch (BlankArrayException e) {
-            e.printStackTrace();
-            return;
-        }
+        maxValue = arraySearchService.findMaxValue(intArrayWrapper.getIntArray());
+
         System.out.println("Максимальное значение в массиве : " + maxValue);
     }
 
     static private void printPrimeNumbers(IntArrayWrapper intArrayWrapper) {
         int[] primeNumbers;
-        try {
-            primeNumbers = arraySearchService
-                    .findPrimeNumbers(intArrayWrapper.getArrayCopy());
-        } catch (NullException e) {
-            e.printStackTrace();
-            return;
-        } catch (BlankArrayException e) {
-            e.printStackTrace();
-            return;
-        }
+        primeNumbers = arraySearchService
+                .findPrimeNumbers(intArrayWrapper.getIntArray());
 
         System.out.println("Массив простых чисел : "
                 + ArrayUtil.arrayToString(primeNumbers));
@@ -137,16 +102,8 @@ public class Main {
 
     static private void printFibonacciNumbers(IntArrayWrapper intArrayWrapper) {
         int[] fibonacciNumbers;
-        try {
-            fibonacciNumbers = arraySearchService
-                    .findFibonacciNumbers(intArrayWrapper.getArrayCopy());
-        } catch (NullException e) {
-            e.printStackTrace();
-            return;
-        } catch (BlankArrayException e) {
-            e.printStackTrace();
-            return;
-        }
+        fibonacciNumbers = arraySearchService
+                .findFibonacciNumbers(intArrayWrapper.getIntArray());
 
         System.out.println("Массив чисел Фибоначчи : "
                 + ArrayUtil.arrayToString(fibonacciNumbers));
@@ -154,16 +111,8 @@ public class Main {
 
     static private void printUniqueThreeDigitNumbers(IntArrayWrapper intArrayWrapper) {
         int[] uniqueThreeDigitNumbers;
-        try {
-            uniqueThreeDigitNumbers = arraySearchService
-                    .findUniqueThreeDigitNumbers(intArrayWrapper.getArrayCopy());
-        } catch (NullException e) {
-            e.printStackTrace();
-            return;
-        } catch (BlankArrayException e) {
-            e.printStackTrace();
-            return;
-        }
+        uniqueThreeDigitNumbers = arraySearchService
+                .findUniqueThreeDigitNumbers(intArrayWrapper.getIntArray());
 
         System.out.println("Массив трехзначных числел, " +
                 "в десятичной записи которых нет одинаковых цифр : "
@@ -194,7 +143,11 @@ public class Main {
 
     static private void printFilledArray(ArrayFiller arrayFiller) {
         int[] a = new int[5];
-        arrayFiller.fillArray(a);
+        try {
+            arrayFiller.fillArray(a);
+        } catch (NullException e) {
+            e.printStackTrace();
+        }
         System.out.println(ArrayUtil.arrayToString(a));
     }
 }

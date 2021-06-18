@@ -1,25 +1,30 @@
 package by.epamtc.iovchuk.task1.service;
 
+import by.epamtc.iovchuk.task1.exception.FirstOverLastIndexException;
 import by.epamtc.iovchuk.task1.exception.NullException;
-import by.epamtc.iovchuk.task1.util.CheckUtil;
+import by.epamtc.iovchuk.task1.exception.OutBoundsException;
+import by.epamtc.iovchuk.task1.validator.ArrayValidator;
 
 /**
  * Сервис для сортировки массива.
  */
 public class ArraySortService {
 
+    private ArrayValidator arrayValidator = new ArrayValidator();
+
     /**
      * Сортировка массива методом выбора.
      *
      * @param array массив для сортировки
-     * @throws NullException если ссылка на массив указывает на null
      */
-    public void selectionSort(int[] array) throws NullException {
-        CheckUtil.checkNull(array, "Массив");
-        int arrayLength = array.length;
-        if (CheckUtil.checkSmallArrayLength(arrayLength)) {
+    public void selectionSort(int[] array) {
+        if (arrayValidator.checkNull(array)
+                || arrayValidator.checkBlank(array)
+                || arrayValidator.checkSingleElement(array)) {
             return;
         }
+
+        int arrayLength = array.length;
 
         for (int outIndex = 0; outIndex < arrayLength; outIndex++) {
 
@@ -43,14 +48,15 @@ public class ArraySortService {
      * Сортировка массива методом пузырька.
      *
      * @param array массив для сортировки
-     * @throws NullException если ссылка на массив указывает на null
      */
     public void bubbleSort(int[] array) throws NullException {
-        CheckUtil.checkNull(array, "Массив");
-        int arrayLength = array.length;
-        if (CheckUtil.checkSmallArrayLength(arrayLength)) {
+        if (arrayValidator.checkNull(array)
+                || arrayValidator.checkBlank(array)
+                || arrayValidator.checkSingleElement(array)) {
             return;
         }
+
+        int arrayLength = array.length;
 
         for (int outIndex = arrayLength - 1; outIndex > 0; --outIndex) {
             for (int inIndex = 0; inIndex < outIndex; ++inIndex) {
@@ -81,25 +87,32 @@ public class ArraySortService {
      * Сортировка массива методом быстрой сортировки.
      *
      * @param array массив для сортировки
-     * @throws NullException если ссылка на массив указывает на null
      */
-    public void quickSort(int[] array) throws NullException {
-        CheckUtil.checkNull(array, "Массив");
-        int arrayLength = array.length;
-        if (CheckUtil.checkSmallArrayLength(arrayLength)) {
+    public void quickSort(int[] array) {
+        if (arrayValidator.checkNull(array)
+                || arrayValidator.checkBlank(array)
+                || arrayValidator.checkSingleElement(array)) {
             return;
         }
+
+        int arrayLength = array.length;
 
         int firstElementIndex = 0;
         int lastElementIndex = array.length - 1;
 
-        quickSortIterate(array, firstElementIndex, lastElementIndex);
+        try {
+            quickSortIterate(array, firstElementIndex, lastElementIndex);
+        } catch (FirstOverLastIndexException ignored) {
+        } catch (OutBoundsException ignored) {
+        }
 
     }
 
     private void quickSortIterate(int[] array,
                                   int firstElementIndex,
-                                  int lastElementIndex) {
+                                  int lastElementIndex)
+            throws FirstOverLastIndexException, OutBoundsException {
+
         int pivotValue = array[firstElementIndex];
         int leftIndex = firstElementIndex;
         int rightIndex = lastElementIndex;
@@ -146,10 +159,30 @@ public class ArraySortService {
      * @param array             массив для сортировки
      * @param firstElementIndex индекс первого элемента в интервале
      * @param lastElementIndex  индекс второго элемента в интервале
+     * @throws OutBoundsException          если один из указанных индексов выходит
+     *                                     за пределы допустимого диапазона массива
+     * @throws FirstOverLastIndexException если минимальный индекс диапазона
+     *                                     больше максимального
      */
-    private void quickSort(int[] array,
-                           int firstElementIndex,
-                           int lastElementIndex) {
+    public void quickSort(int[] array,
+                          int firstElementIndex,
+                          int lastElementIndex)
+            throws OutBoundsException, FirstOverLastIndexException {
+
+        if (arrayValidator.checkNull(array)
+                || arrayValidator.checkBlank(array)
+                || arrayValidator.checkSingleElement(array)) {
+            return;
+        }
+
+        if (arrayValidator.checkOutOfBounds(array, firstElementIndex)
+                || arrayValidator.checkOutOfBounds(array, lastElementIndex)) {
+            throw new OutBoundsException();
+        }
+
+        if (firstElementIndex > lastElementIndex) {
+            throw new FirstOverLastIndexException();
+        }
 
         if (firstElementIndex == lastElementIndex) {
             return;
@@ -157,7 +190,5 @@ public class ArraySortService {
 
         quickSortIterate(array, firstElementIndex, lastElementIndex);
     }
-
-
 
 }

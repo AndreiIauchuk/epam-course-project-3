@@ -1,17 +1,14 @@
 package by.epamtc.iovchuk.task1.wrapper;
 
-import by.epamtc.iovchuk.task1.exception.BlankArrayException;
-import by.epamtc.iovchuk.task1.exception.NullException;
 import by.epamtc.iovchuk.task1.exception.OutBoundsException;
 import by.epamtc.iovchuk.task1.service.ArraySearchService;
 import by.epamtc.iovchuk.task1.service.ArraySortService;
 import by.epamtc.iovchuk.task1.util.ArrayUtil;
-import by.epamtc.iovchuk.task1.util.CheckUtil;
+import by.epamtc.iovchuk.task1.validator.ArrayValidator;
 
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 
 public class IntArrayWrapper implements Serializable {
 
@@ -21,29 +18,25 @@ public class IntArrayWrapper implements Serializable {
     private int length;
     private int capacity;
 
+    private ArrayValidator arrayValidator = new ArrayValidator();
+
     public IntArrayWrapper() {
         capacity = DEFAULT_CAPACITY;
         intArray = new int[capacity];
     }
 
-    public IntArrayWrapper(int[] intArray) {
-        int length = intArray.length;
-        calculateCapacity(length);
-
-        this.length = length;
-        this.intArray = new int[capacity];
+    public IntArrayWrapper(int[] array) {
+        int length = array.length;
+        createWrappedArray(length);
 
         for (int i = 0; i < length; i++) {
-            this.intArray[i] = intArray[i];
+            this.intArray[i] = array[i];
         }
     }
 
     public IntArrayWrapper(Integer[] integers) {
         int length = integers.length;
-        calculateCapacity(length);
-
-        this.length = length;
-        intArray = new int[capacity];
+        createWrappedArray(length);
 
         for (int i = 0; i < length; i++) {
             intArray[i] = integers[i];
@@ -52,16 +45,11 @@ public class IntArrayWrapper implements Serializable {
 
     public IntArrayWrapper(Collection<Integer> intCollection) {
         int length = intCollection.size();
-        calculateCapacity(length);
-
-        this.length = length;
-        intArray = new int[capacity];
-
-        Iterator<Integer> iterator = intCollection.iterator();
+        createWrappedArray(length);
 
         int i = 0;
-        while (iterator.hasNext()) {
-            intArray[i] = iterator.next();
+        for (Integer integer : intCollection) {
+            intArray[i] = integer;
             ++i;
         }
     }
@@ -70,15 +58,18 @@ public class IntArrayWrapper implements Serializable {
         String[] strArray = values.split(", ");
 
         int length = strArray.length;
-        calculateCapacity(length);
-
-        this.length = length;
-        intArray = new int[capacity];
+        createWrappedArray(length);
 
         for (int i = 0; i < strArray.length; i++) {
             intArray[i] = Integer.valueOf(strArray[i]);
         }
 
+    }
+
+    private void createWrappedArray(int length) {
+        calculateCapacity(length);
+        this.length = length;
+        intArray = new int[capacity];
     }
 
     private void calculateCapacity(int length) {
@@ -120,8 +111,14 @@ public class IntArrayWrapper implements Serializable {
      * @param value значение
      * @param index индекс, в который добавляется значение
      * @return true, если значение было добавлено
+     * @throws OutBoundsException если индекс выходит за пределы с
+     *                            допустимого диапазона массива
      */
-    public boolean add(int value, int index) {
+    public boolean add(int value, int index) throws OutBoundsException {
+        if (arrayValidator.checkOutOfBounds(intArray, index)) {
+            throw new OutBoundsException();
+        }
+
         if (!validateCapacity(length + 1)) {
             doubleCapacity();
         }
@@ -139,9 +136,13 @@ public class IntArrayWrapper implements Serializable {
      *
      * @param value значение
      * @return true, если элемент был удален
+     * @throws OutBoundsException если индекс выходит за пределы с
+     *                            допустимого диапазона массива
      */
     public boolean remove(int index) throws OutBoundsException {
-        CheckUtil.checkOutOfBoundsArray(index, length);
+        if (arrayValidator.checkOutOfBounds(intArray, index)) {
+            throw new OutBoundsException();
+        }
 
         int elemsToCopyCount = length - 1 - index;
         System.arraycopy(intArray, index + 1, intArray, index, elemsToCopyCount);
@@ -155,9 +156,13 @@ public class IntArrayWrapper implements Serializable {
      *
      * @param index индекс элемента
      * @return значение элемента массива
+     * @throws OutBoundsException если индекс выходит за пределы с
+     *                            допустимого диапазона массива
      */
     public int getElement(int index) throws OutBoundsException {
-        CheckUtil.checkOutOfBoundsArray(index, length);
+        if (arrayValidator.checkOutOfBounds(intArray, index)) {
+            throw new OutBoundsException();
+        }
 
         return intArray[index];
     }
@@ -166,9 +171,13 @@ public class IntArrayWrapper implements Serializable {
      * Устанавливает значение элемента массива с указанным индексом.
      *
      * @param index индекс элемента
+     * @throws OutBoundsException если индекс выходит за пределы с
+     *                            допустимого диапазона массива
      */
     public void setElement(int index, int value) throws OutBoundsException {
-        CheckUtil.checkOutOfBoundsArray(index, length);
+        if (arrayValidator.checkOutOfBounds(intArray, index)) {
+            throw new OutBoundsException();
+        }
 
         intArray[index] = value;
     }
@@ -177,7 +186,8 @@ public class IntArrayWrapper implements Serializable {
      * "Переворачивает" массив.
      */
     public void invert() {
-        if (CheckUtil.checkSmallArrayLength(length)) {
+        if (arrayValidator.checkBlank(intArray)
+                || arrayValidator.checkSingleElement(intArray)) {
             return;
         }
 
@@ -192,11 +202,20 @@ public class IntArrayWrapper implements Serializable {
     /**
      * Сортирует массив по возрастанию.
      */
-    public void sort() throws NullException {
-        int[] tempArray = getArrayCopy();
-        System.arraycopy(intArray, 0, tempArray, 0, length);
+    public void sort() {
+        if (arrayValidator.checkBlank(intArray)
+                || arrayValidator.checkSingleElement(intArray)) {
+            return;
+        }
+
+        int[] tempArray = getIntArray();
         new ArraySortService().quickSort(tempArray);
-        System.arraycopy(tempArray, 0, intArray, 0, length);
+
+        int i = 0;
+        for (int value : tempArray) {
+            intArray[i] = value;
+            ++i;
+        }
     }
 
     /**
@@ -204,17 +223,19 @@ public class IntArrayWrapper implements Serializable {
      *
      * @param value искомое значение элемента массива
      * @return индекс искомого элемента массива
-     * @throws NullException       если ссылка на массив указывает на null
-     * @throws BlankArrayException если массив является пустым
      */
-    public int indexOf(int value) throws BlankArrayException, NullException {
-        int[] tempArray = getArrayCopy();
-        return new ArraySearchService().indexOf(tempArray, value);
+    public int indexOf(int value) {
+        int[] tempArray = getIntArray();
+        return new ArraySearchService().binarySearch(tempArray, value);
     }
 
-    public int[] getArrayCopy() {
+    public int[] getIntArray() {
         int[] tempArray = new int[length];
-        System.arraycopy(intArray, 0, tempArray, 0, length);
+
+        for (int i = 0; i < length; i++) {
+            tempArray[i] = intArray[i];
+        }
+
         return tempArray;
     }
 
@@ -246,7 +267,7 @@ public class IntArrayWrapper implements Serializable {
     @Override
     public String toString() {
         return getClass() + " {" +
-                "intArray=" + ArrayUtil.arrayToString(getArrayCopy()) +
+                "intArray=" + ArrayUtil.arrayToString(getIntArray()) +
                 ", length=" + length +
                 ", capacity=" + capacity +
                 '}';

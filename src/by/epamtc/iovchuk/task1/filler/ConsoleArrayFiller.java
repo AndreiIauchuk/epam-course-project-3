@@ -1,5 +1,8 @@
 package by.epamtc.iovchuk.task1.filler;
 
+import by.epamtc.iovchuk.task1.exception.NullException;
+import by.epamtc.iovchuk.task1.validator.ArrayValidator;
+
 import java.util.Scanner;
 
 /**
@@ -11,7 +14,7 @@ public class ConsoleArrayFiller extends ArrayFiller {
     private final Scanner consoleScanner = new Scanner(System.in);
 
     @Override
-    public void fillArray(int[] array) {
+    public void fillArray(int[] array) throws NullException {
         int arrayLength = array.length;
         for (int index = 0; index < arrayLength; index++) {
             array[index] = readIntValue();
@@ -27,5 +30,6 @@ public class ConsoleArrayFiller extends ArrayFiller {
 
         return consoleScanner.nextInt();
     }
+
 
 }

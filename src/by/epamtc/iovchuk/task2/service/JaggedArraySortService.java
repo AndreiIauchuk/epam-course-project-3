@@ -1,19 +1,25 @@
 package by.epamtc.iovchuk.task2.service;
 
-import by.epamtc.iovchuk.task1.exception.NullException;
-import by.epamtc.iovchuk.task1.util.CheckUtil;
+import by.epamtc.iovchuk.task1.validator.JaggedArrayValidator;
+import by.epamtc.iovchuk.task2.comparator.ArrayByMaxValueComparator;
+import by.epamtc.iovchuk.task2.comparator.ArrayByMinValueComparator;
+import by.epamtc.iovchuk.task2.comparator.ArrayByValuesSumComparator;
+
+import java.util.Arrays;
+import java.util.Comparator;
 
 public class JaggedArraySortService {
+
+    private JaggedArrayValidator jaggedArrayValidator = new JaggedArrayValidator();
 
     /**
      * Сортирует непрямоугольный целочисленный массив
      * по сумме элементов строк пузырьковым методом.
      *
      * @param jaggedArray непрямоугольный массив для сортировки
-     * @throws NullException если ссылка на массив указывает на null
      */
-    public void rowValuesSumSort(int[][] jaggedArray) throws NullException {
-        sort(jaggedArray, "rowValuesSum");
+    public void rowValuesSumSort(int[][] jaggedArray) {
+        sort(jaggedArray, new ArrayByValuesSumComparator());
     }
 
     /**
@@ -21,10 +27,9 @@ public class JaggedArraySortService {
      * по максимальному значению элемента строк пузырьковым методом.
      *
      * @param jaggedArray непрямоугольный массив для сортировки
-     * @throws NullException если ссылка на массив указывает на null
      */
-    public void rowMaxValueSort(int[][] jaggedArray) throws NullException {
-        sort(jaggedArray, "maxValue");
+    public void rowMaxValueSort(int[][] jaggedArray) {
+        sort(jaggedArray, new ArrayByMaxValueComparator());
     }
 
     /**
@@ -32,57 +37,27 @@ public class JaggedArraySortService {
      * по минимальному значению элемента строк пузырьковым методом.
      *
      * @param jaggedArray непрямоугольный массив для сортировки
-     * @throws NullException если ссылка на массив указывает на null
      */
-    public void rowMinValueSort(int[][] jaggedArray) throws NullException {
-        sort(jaggedArray, "minValue");
+    public void rowMinValueSort(int[][] jaggedArray) {
+        sort(jaggedArray, new ArrayByMinValueComparator());
     }
 
-    private void sort(int[][] jaggedArray, String sortBy) throws NullException {
-        CheckUtil.checkNull(jaggedArray, "Непрямоугольный массив");
-        int jaggedArrayLength = jaggedArray.length;
-
-        if (CheckUtil.checkSmallArrayLength(jaggedArrayLength)) {
+    private void sort(int[][] jaggedArray, Comparator<Object> arrayComparator) {
+        if (jaggedArrayValidator.checkNull(jaggedArray)
+                || jaggedArrayValidator.checkBlank(jaggedArray)
+                || jaggedArrayValidator.checkSingleRow(jaggedArray)) {
             return;
         }
 
-        switch (sortBy) {
-            case "rowValuesSum":
-                for (int outIndex = jaggedArrayLength - 1; outIndex > 0; --outIndex) {
-                    for (int inIndex = 0; inIndex < outIndex; ++inIndex) {
+        int jaggedArrayLength = jaggedArray.length;
 
-                        if (calcRowValuesSum(jaggedArray[inIndex]) > calcRowValuesSum(jaggedArray[inIndex + 1])) {
-                            swapRows(jaggedArray, inIndex, inIndex + 1);
-                        }
-                    }
+        for (int outIndex = jaggedArrayLength - 1; outIndex > 0; --outIndex) {
+            for (int inIndex = 0; inIndex < outIndex; ++inIndex) {
+
+                if (arrayComparator.compare(jaggedArray[inIndex], jaggedArray[inIndex + 1]) == 1) {
+                    swapRows(jaggedArray, inIndex, inIndex + 1);
                 }
-
-                break;
-
-            case "maxValue":
-                for (int outIndex = jaggedArrayLength - 1; outIndex > 0; --outIndex) {
-                    for (int inIndex = 0; inIndex < outIndex; ++inIndex) {
-
-                        if (calcRowValuesSum(jaggedArray[inIndex]) > calcRowValuesSum(jaggedArray[inIndex + 1])) {
-                            swapRows(jaggedArray, inIndex, inIndex + 1);
-                        }
-                    }
-                }
-
-                break;
-
-            case "minValue":
-                for (int outIndex = jaggedArrayLength - 1; outIndex > 0; --outIndex) {
-                    for (int inIndex = 0; inIndex < outIndex; ++inIndex) {
-
-                        if (calcRowValuesSum(jaggedArray[inIndex]) > calcRowValuesSum(jaggedArray[inIndex + 1])) {
-                            swapRows(jaggedArray, inIndex, inIndex + 1);
-                        }
-                    }
-                }
-
-                break;
-
+            }
         }
 
     }
@@ -99,13 +74,14 @@ public class JaggedArraySortService {
     /**
      * "Переворачивает" непрямоугольный целочисленный массив.
      */
-    public void invert(int[][] jaggedArray) throws NullException {
-        CheckUtil.checkNull(jaggedArray, "Непрямоугольный массив");
-        int jaggedArrayLength = jaggedArray.length;
-
-        if (CheckUtil.checkSmallArrayLength(jaggedArrayLength)) {
+    public void invert(int[][] jaggedArray) {
+        if (jaggedArrayValidator.checkNull(jaggedArray)
+                || jaggedArrayValidator.checkBlank(jaggedArray)
+                || jaggedArrayValidator.checkSingleRow(jaggedArray)) {
             return;
         }
+
+        int jaggedArrayLength = jaggedArray.length;
 
         int[] tempRow;
         for (int i = 0; i < jaggedArrayLength / 2; i++) {
@@ -113,34 +89,6 @@ public class JaggedArraySortService {
             jaggedArray[i] = jaggedArray[jaggedArrayLength - 1 - i];
             jaggedArray[jaggedArrayLength - 1 - i] = tempRow;
         }
-    }
-
-    private int calcRowValuesSum(int[] row) {
-        int sum = 0;
-        for (int value : row) {
-            sum += value;
-        }
-        return sum;
-    }
-
-    private int defineRowMaxValue(int[] row) {
-        int maxValue = row[0];
-        for (int value : row) {
-            if (value > maxValue) {
-                maxValue = value;
-            }
-        }
-        return maxValue;
-    }
-
-    private int defineRowMinValue(int[] row) {
-        int minValue = row[0];
-        for (int value : row) {
-            if (value < minValue) {
-                minValue = value;
-            }
-        }
-        return minValue;
     }
 
 }
