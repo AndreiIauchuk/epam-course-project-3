@@ -3,6 +3,7 @@ package by.epamtc.iovchuk.task1.service;
 import by.epamtc.iovchuk.task1.exception.FirstOverLastIndexException;
 import by.epamtc.iovchuk.task1.exception.OutBoundsException;
 import by.epamtc.iovchuk.task1.validator.ArrayValidator;
+import by.epamtc.iovchuk.task1.wrapper.IntArrayWrapper;
 
 /**
  * Сервис для сортировки массива.
@@ -81,6 +82,26 @@ public class ArraySortService {
         array[secondElementIndex] = temp;
     }
 
+
+    /**
+     * Сортировка обернутого массива методом выбора.
+     *
+     * @param intArrayWrapper класс-оболочка массива для сортировки
+     */
+    public void selectionSort(IntArrayWrapper intArrayWrapper) {
+        int[] wrappedArray = intArrayWrapper.getIntArray();
+        selectionSort(wrappedArray);
+    }
+
+    /**
+     * Сортировка обернутого массива методом пузырька.
+     *
+     * @param intArrayWrapper класс-оболочка массива для сортировки
+     */
+    public void bubbleSort(IntArrayWrapper intArrayWrapper) {
+        int[] wrappedArray = intArrayWrapper.getIntArray();
+        bubbleSort(wrappedArray);
+    }
 
     /**
      * Сортировка массива методом быстрой сортировки.
@@ -185,6 +206,37 @@ public class ArraySortService {
         }
 
         quickSortIterate(array, firstElementIndex, lastElementIndex);
+    }
+
+    /**
+     * Сортировка обернутого массива методом быстрой сортировки.
+     *
+     * @param intArrayWrapper класс-оболочка массива для сортировки
+     */
+    public void quickSort(IntArrayWrapper intArrayWrapper) {
+        int[] wrappedArray = intArrayWrapper.getIntArray();
+        quickSort(wrappedArray);
+    }
+
+    /**
+     * Сортировка обернутого массива методом быстрой сортировки
+     * для указанного интервала.
+     *
+     * @param intArrayWrapper   класс-оболочка массива для сортировки
+     * @param firstElementIndex индекс первого элемента в интервале
+     * @param lastElementIndex  индекс второго элемента в интервале
+     * @throws OutBoundsException          если один из указанных индексов выходит
+     *                                     за пределы допустимого диапазона массива
+     * @throws FirstOverLastIndexException если минимальный индекс диапазона
+     *                                     больше максимального
+     */
+    public void quickSort(IntArrayWrapper intArrayWrapper,
+                          int firstElementIndex,
+                          int lastElementIndex)
+            throws OutBoundsException, FirstOverLastIndexException {
+
+        int[] wrappedArray = intArrayWrapper.getIntArray();
+        quickSort(wrappedArray, firstElementIndex, lastElementIndex);
     }
 
 }

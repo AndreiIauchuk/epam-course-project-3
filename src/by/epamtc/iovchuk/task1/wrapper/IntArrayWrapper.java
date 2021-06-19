@@ -209,7 +209,7 @@ public class IntArrayWrapper implements Serializable {
         }
 
         int[] tempArray = getIntArray();
-        new ArraySortService().quickSort(tempArray);
+        new ArraySortService().quickSort(this);
 
         int i = 0;
         for (int value : tempArray) {
