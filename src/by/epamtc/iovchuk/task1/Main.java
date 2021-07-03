@@ -40,7 +40,7 @@ import java.io.FileNotFoundException;
  */
 public class Main {
 
-    static private ArraySearchService arraySearchService = new ArraySearchService();
+    static private final ArraySearchService arraySearchService = new ArraySearchService();
 
     public static void main(String[] args) {
 

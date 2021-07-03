@@ -8,7 +8,7 @@ import by.epamtc.iovchuk.task1.validator.ArrayValidator;
  */
 public abstract class ArrayFiller {
 
-    private ArrayValidator arrayValidator = new ArrayValidator();
+    private final ArrayValidator arrayValidator = new ArrayValidator();
 
     abstract public void fillArray(int[] array) throws NullException;
 

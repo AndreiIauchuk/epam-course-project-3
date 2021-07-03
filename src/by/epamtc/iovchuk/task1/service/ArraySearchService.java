@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class ArraySearchService {
 
-    private ArrayValidator arrayValidator = new ArrayValidator();
+    private final ArrayValidator arrayValidator = new ArrayValidator();
 
     /**
      * Находит индекс элемента массива с указанным значением

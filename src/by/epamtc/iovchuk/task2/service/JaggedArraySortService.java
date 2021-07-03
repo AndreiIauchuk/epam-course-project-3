@@ -9,7 +9,7 @@ import java.util.Comparator;
 
 public class JaggedArraySortService {
 
-    private JaggedArrayValidator jaggedArrayValidator = new JaggedArrayValidator();
+    private final JaggedArrayValidator jaggedArrayValidator = new JaggedArrayValidator();
 
     /**
      * Сортирует непрямоугольный целочисленный массив

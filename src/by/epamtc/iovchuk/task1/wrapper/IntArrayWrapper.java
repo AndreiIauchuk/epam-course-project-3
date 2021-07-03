@@ -18,7 +18,7 @@ public class IntArrayWrapper implements Serializable {
     private int length;
     private int capacity;
 
-    private ArrayValidator arrayValidator = new ArrayValidator();
+    private final ArrayValidator arrayValidator = new ArrayValidator();
 
     public IntArrayWrapper() {
         capacity = DEFAULT_CAPACITY;
@@ -29,9 +29,7 @@ public class IntArrayWrapper implements Serializable {
         int length = array.length;
         createWrappedArray(length);
 
-        for (int i = 0; i < length; i++) {
-            this.intArray[i] = array[i];
-        }
+        System.arraycopy(array, 0, this.intArray, 0, length);
     }
 
     public IntArrayWrapper(Integer[] integers) {
@@ -231,11 +229,7 @@ public class IntArrayWrapper implements Serializable {
 
     public int[] getIntArray() {
         int[] tempArray = new int[length];
-
-        for (int i = 0; i < length; i++) {
-            tempArray[i] = intArray[i];
-        }
-
+        if (length >= 0) System.arraycopy(intArray, 0, tempArray, 0, length);
         return tempArray;
     }
 

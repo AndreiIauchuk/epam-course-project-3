@@ -10,7 +10,7 @@ import by.epamtc.iovchuk.task1.wrapper.IntArrayWrapper;
  */
 public class ArraySortService {
 
-    private ArrayValidator arrayValidator = new ArrayValidator();
+    private final ArrayValidator arrayValidator = new ArrayValidator();
 
     /**
      * Сортировка массива методом выбора.
@@ -73,7 +73,7 @@ public class ArraySortService {
      * @param firstElementIndex  индекс первого элемента
      * @param secondElementIndex индекс второго элемента
      */
-    public void swap(int[] array,
+    private void swap(int[] array,
                      int firstElementIndex,
                      int secondElementIndex) {
 
@@ -81,7 +81,6 @@ public class ArraySortService {
         array[firstElementIndex] = array[secondElementIndex];
         array[secondElementIndex] = temp;
     }
-
 
     /**
      * Сортировка обернутого массива методом выбора.
